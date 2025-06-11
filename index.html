@@ -1167,6 +1167,82 @@ h3 i.text-highlight {
     right: 16px !important;
 }
 
+/* 导航菜单样式 */
+.nav-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 6px;
+    min-width: 68px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-pill:hover {
+    transform: translateY(-2px);
+    background-color: rgba(var(--highlight-color-rgb), 0.1);
+}
+
+.nav-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-pill:hover .nav-icon {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.nav-icon i {
+    color: white;
+    font-size: 1rem;
+}
+
+.nav-text {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-pill:hover .nav-text {
+    color: var(--highlight-color);
+}
+
+/* 隐藏滚动条但保留功能 */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+/* 深色模式下的导航样式调整 */
+[data-theme="dark"] .nav-pill:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .nav-icon {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .nav-pill:hover .nav-icon {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
 /* 学习路线图相关样式 */
 .rounded-lg.border.border-gray-200.dark\:border-gray-700 {
     border-color: rgba(30, 41, 82, 0.08);
@@ -2179,6 +2255,28 @@ h3 i.text-highlight {
 
 <section class="w-full max-w-6xl mx-auto mb-2 rounded-xl transition-all duration-300 overflow-hidden card" style="border: none; background-color: transparent; box-shadow: none !important; margin-top: 0.2rem;">
     <div class="px-4 md:px-6 py-4 md:py-6">
+        <!-- Horizontal Navigation Menu -->
+        <div class="w-full mb-6 overflow-x-auto hide-scrollbar">
+            <div class="flex items-center justify-between border-b pb-3 mb-4" style="border-color: var(--border-color);">
+                <div class="text-lg font-medium" style="color: var(--text-primary);">Navigation</div>
+                <div class="text-sm text-gray-500">Quick Access</div>
+            </div>
+            <div class="flex items-center space-x-6 md:space-x-8 pb-2 justify-center">
+                <a href="/archives" class="nav-pill">
+                    <div class="nav-icon bg-gradient-to-br from-blue-500 to-blue-600">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <div class="nav-text">All Posts</div>
+                </a>
+                <a href="http://demo.719520.xyz" class="nav-pill" target="_blank">
+                    <div class="nav-icon bg-gradient-to-br from-purple-500 to-purple-600">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="nav-text">Frontend</div>
+                </a>
+            </div>
+        </div>
+
         <!-- 功能卡片区域 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-3">
             <!-- 卡片1: 数据可视化项目 -->
