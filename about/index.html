@@ -1051,6 +1051,55 @@
 
 <style>
   /* 关于我页面样式 */
+  /* cyberpunk 风格样式 */
+  .cyberpunk-content {
+    position: relative;
+    padding: 20px;
+    border: 2px solid var(--highlight-color);
+    background: rgba(var(--highlight-color-rgb), 0.03);
+    color: var(--text-color);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(var(--highlight-color-rgb), 0.1);
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+  }
+  
+  .cyber-button {
+    position: relative;
+    border: 1px solid var(--highlight-color);
+    background: transparent;
+    color: var(--text-color);
+    overflow: hidden;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    box-shadow: 0 0 5px rgba(var(--highlight-color-rgb), 0.3);
+    text-decoration: none;
+  }
+  
+  .cyber-button:hover {
+    background: rgba(var(--highlight-color-rgb), 0.1);
+    color: var(--highlight-color);
+    box-shadow: 0 0 10px rgba(var(--highlight-color-rgb), 0.5);
+    transform: translateY(-1px);
+  }
+  
+  [data-theme="dark"] .cyber-button {
+    border-color: var(--highlight-color);
+    color: var(--text-color);
+    background: rgba(var(--highlight-color-rgb), 0.05);
+  }
+  
+  [data-theme="dark"] .cyber-button:hover {
+    background: rgba(var(--highlight-color-rgb), 0.15);
+    color: var(--highlight-color);
+  }
+  
+  .terminal-info div {
+    position: relative;
+    z-index: 2;
+  }
   .about-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -1335,7 +1384,48 @@
       </div>
     </section>
   </div>
-</div> 
+</div>
+
+<!-- 页脚 - 添加底部padding以避免内容被导航栏遮挡 -->
+<footer class="py-6 pb-20 border-t mt-2" style="border-color: var(--border-color);">
+    <div class="container mx-auto px-4 flex flex-col items-center">
+        <!-- 神经接口终端风格的菜单 -->
+        <div class="cyberpunk-content mb-6 w-full max-w-3xl">
+            <div class="flex flex-wrap justify-center mb-4">
+                <a href="/system" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Monitor <span class="hidden sm:inline text-xs ml-1">// SYS_OVERVIEW</span>
+                </a>
+                <a href="/corp" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Market <span class="hidden sm:inline text-xs ml-1">// CORP_LIAISON</span>
+                </a>
+                <a href="/protocol" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Protocol <span class="hidden sm:inline text-xs ml-1">// USER_PROTOCOL</span>
+                </a>
+                <a href="/privacy" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Firewall <span class="hidden sm:inline text-xs ml-1">// PRIVACY_POLICY</span>
+                </a>
+                <a href="/contact" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Fixer <span class="hidden sm:inline text-xs ml-1">// CONTACT_FIXER</span>
+                </a>
+                <a href="/map" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                    Matrix <span class="hidden sm:inline text-xs ml-1">// DATANET_MAP</span>
+                </a>
+            </div>
+            
+            <div class="mt-6 text-center terminal-info">
+                <div class="text-base font-bold mb-2">"Night City" Digital Consciousness Link Terminal</div>
+                <div class="text-xs mb-1">Access Point: Cyber Space · Quantum Zone · Seventh Quadrant HEX#FF7700 Storage Block: NC-404</div>
+                <div class="text-xs mb-1">Consciousness Hotline: XNET-7700-2077 Emergency Support: mclanyce#gmail.com</div>
+            </div>
+        </div>
+        
+        <p class="text-center text-sm text-secondary mb-1">
+            &copy; 2025 Rick's Blog. Powered by Hexo&Rick
+        </p>
+    </div>
+</footer>
+
+<!-- 底部悬浮导航栏已通过继承layout.ejs自动添加 -->
     </div>
 
     <!-- 赛博朋克风格展示板 -->
