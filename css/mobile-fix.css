@@ -1,0 +1,19 @@
+/* 移动设备背景图片修复 */
+@media (max-width: 768px) {
+    /* 背景图片在移动端的样式调整 - 修复不完全显示问题 */
+    .bg-image-container {
+        max-height: none !important; /* 移除高度限制 */
+        margin-bottom: 0.75rem;
+        margin-top: 0.5rem;
+        width: 100%;
+        overflow: visible !important; /* 允许图片溢出容器 */
+    }
+    
+    .bg-image-container img {
+        height: auto !important;
+        width: 100% !important; /* 确保图片完整显示 */
+        max-width: 100%;
+        object-fit: contain !important; /* 使用contain而非cover，确保图片完整显示 */
+        object-position: center;
+    }
+} 
