@@ -192,8 +192,6 @@ nav .text-primary {
     transform: translateY(0);
 }
 
-/* 技能雷达相关样式已移除 */
-
 @keyframes fadeIn {
     from {
         opacity: 0;

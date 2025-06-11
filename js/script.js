@@ -131,8 +131,6 @@ function initMobileMenu() {
     }
 }
 
-// 技能雷达图功能已移除
-
 // Scroll Animations
 document.addEventListener('DOMContentLoaded', function() {
     const fadeElements = document.querySelectorAll('.fade-in');
