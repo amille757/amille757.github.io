@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 初始主题检测 - 必须放在最前面 -->
+<script>
+    (function() {
+        // 检查本地存储中的主题设置
+        const savedTheme = localStorage.getItem('theme');
+        const userSetTheme = localStorage.getItem('user-set-theme');
+        
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else {
+            // 获取当前UTC时间
+            const now = new Date();
+            // 转换为北京时间 (UTC+8)
+            const beijingHours = (now.getUTCHours() + 8) % 24;
+            // 定义白天时段 (6:00-18:00)
+            const isDaytime = beijingHours >= 6 && beijingHours < 18;
+            // 根据北京时间设置初始主题
+            document.documentElement.setAttribute('data-theme', isDaytime ? 'light' : 'dark');
+        }
+    })();
+</script>
+
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="A blog documenting the real-world challenges and humorous mishaps encountered during the development of TaskWeaver, offering insights into AI agent planning, prompt engineering, and collaborative development.">
+<meta name="keywords" content="AI Agents, Task Planning, Prompt Engineering, LLM Integration, Debugging, Development Stories, OpenAI API, Secrets Management, Intern Mistakes, Engineering Culture">
+<meta name="author" content="RICK TSUI">
+<meta name="generator" content="Hexo">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico"> 
+<!-- Theme meta tag -->
+<meta name="color-scheme" content="light dark">
+<title>Rick&#39;s Blog | Exploring the Realities of AI Development - 构建高性能电子商务平台：React与GraphQL的实战应用</title>
+<!-- Theme Style -->
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<link rel="stylesheet" href="/css/mobile-fix.css">
+
+<!-- Logo CSS removed as we're now using text instead of images -->
+
+<!-- Open Graph 协议 -->
+<meta property="og:title" content="Rick&#39;s Blog">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://example.com">
+<meta property="og:description" content="A blog documenting the real-world challenges and humorous mishaps encountered during the development of TaskWeaver, offering insights into AI agent planning, prompt engineering, and collaborative development."> 
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js 已移除 -->
+    <style>
+        /* 动态计算border-color的RGB值，用于透明效果 */
+        :root {
+            --border-color-rgb: 224, 224, 224; /* 默认浅色模式的#e0e0e0对应的RGB */
+        }
+        :root[data-theme="dark"] {
+            --border-color-rgb: 42, 42, 42; /* 深色模式的#2a2a2a对应的RGB */
+        }
+        
+        /* 全局盒模型规则 - 其余CSS变量已移至style.css */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* 页面过渡效果 */
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 导航栏样式 */
+        .nav-bg {
+            background-color: var(--bg-card);
+            border-color: var(--border-color);
+        }
+
+        /* Logo 动画 */
+        .logo-text {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .logo-letter {
+            display: inline-block;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        a:hover .logo-letter {
+            color: var(--highlight-color);
+            transform: translateY(-2px);
+            transition-delay: calc(var(--index) * 0.05s);
+        }
+
+        /* 高亮文本 */
+        .text-highlight {
+            color: var(--icon-color);
+        }
+
+        /* 链接高亮效果 */
+        .highlight-hover-text {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .highlight-hover-text:hover {
+            color: var(--highlight-color);
+        }
+
+        /* 主题切换图标 */
+        .theme-toggle i {
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* 加载动画 */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(var(--highlight-color-rgb), 0.3);
+            border-radius: 50%;
+            border-top-color: var(--highlight-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--text-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: var(--text-color);
+        }
+
+        /* iOS Safari specific CSS */
+        @supports (-webkit-touch-callout: none) {
+            .min-h-screen {
+                min-height: -webkit-fill-available;
+            }
+        }
+        
+        /* TikTok-style flashing effect for logo text */
+        .logo-text {
+            position: relative;
+            display: inline-block;
+            letter-spacing: -1px; /* Even tighter letter spacing */
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+        }
+        
+        .logo-letter {
+            display: inline-block;
+            position: relative;
+            transition: color 0.1s ease; /* Faster transition for sharper effect */
+            margin: 0;
+            padding: 0;
+        }
+        
+        @keyframes tiktokFlash {
+            0%, 100% {
+                color: var(--text-primary);
+                text-shadow: none;
+                transform: scale(1);
+            }
+            10% { /* Shorter flash duration */
+                color: var(--highlight-color);
+                text-shadow: 0 0 10px var(--highlight-color);
+                transform: scale(1.05); /* Subtle scale effect */
+            }
+        }
+        
+        /* Apply animation with different delays to create the sequential effect */
+        .logo-letter:nth-child(1) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.0s; }
+        .logo-letter:nth-child(2) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.15s; }
+        .logo-letter:nth-child(3) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.3s; }
+        .logo-letter:nth-child(4) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.45s; }
+        .logo-letter:nth-child(5) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.6s; }
+        .logo-letter:nth-child(6) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.75s; }
+        .logo-letter:nth-child(7) { animation: tiktokFlash 1.8s infinite; animation-delay: 0.9s; }
+        .logo-letter:nth-child(8) { animation: tiktokFlash 1.8s infinite; animation-delay: 1.05s; }
+        .logo-letter:nth-child(9) { animation: tiktokFlash 1.8s infinite; animation-delay: 1.2s; }
+        .logo-letter:nth-child(10) { animation: tiktokFlash 1.8s infinite; animation-delay: 1.35s; }
+        .logo-letter:nth-child(11) { animation: tiktokFlash 1.8s infinite; animation-delay: 1.5s; }
+
+        /* 深色模式底部导航栏样式 */
+        [data-theme="dark"] [data-theme-switch] {
+            background-color: rgba(0, 0, 0, 0.7) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        [data-theme="dark"] .dark-mode-icon {
+            color: white !important;
+        }
+        
+        [data-theme="dark"] .dark-mode-divider {
+            background-color: rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        /* 顶部横幅样式 - 类似Labubu风格 */
+        .hero-banner {
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="dark"] .hero-banner {
+            background-color: rgba(40, 40, 40, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            width: 150px;
+            height: 150px;
+            margin-left: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-tag:hover {
+            transform: translateY(-2px);
+        }
+        
+        .tag-blue {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .tag-purple {
+            background-color: #4a5568;
+            color: white;
+        }
+        
+        .tag-green {
+            background-color: #2d3748;
+            color: white;
+        }
+        
+        .tag-red {
+            background-color: #c53030;
+            color: white;
+        }
+        
+        .character-info {
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+        
+        .character-friends {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .friend-icon {
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 赛博朋克风格展示板 */
+        .cyberpunk-banner {
+            border: none !important;
+            position: relative;
+            z-index: 1;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            margin: 0 auto 20px;
+            max-width: 100%;
+        }
+        
+        [data-theme="dark"] .cyberpunk-banner {
+            background-color: transparent !important;
+        }
+        
+        .cyber-main {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 简化面板样式，与主题保持一致 */
+        .cyberpunk-content {
+            position: relative;
+            z-index: 2;
+            background-color: transparent;
+            padding: 16px 12px;
+            max-width: 100%;
+        }
+        
+        /* 文字标题使用主题变量 */
+        .glitch-text {
+            color: var(--text-color) !important;
+            text-shadow: none;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            word-break: break-word;
+        }
+        
+        /* 所有文本使用主题颜色变量 */
+        p[style*="color: #fcee0a"],
+        span[style*="color: #fcee0a"],
+        div[style*="color: #fcee0a"] {
+            color: var(--text-color) !important;
+            text-shadow: none !important;
+        }
+        
+        span[style*="color: #fcee0a; font-weight: bold"],
+        div.mb-2.text-xs[style*="color: #fcee0a; font-family: monospace"] {
+            color: var(--text-color) !important;
+            text-shadow: none !important;
+        }
+        
+        /* 状态指示灯使用主题颜色 */
+        .cyber-light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            background-color: var(--highlight-color);
+        }
+        
+        /* 按钮与主题风格统一 */
+        .cyber-button {
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            background-color: transparent;
+            text-shadow: none;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .cyber-button:hover {
+            background-color: var(--bg-hover);
+            transform: translateY(-1px);
+        }
+        
+        /* 为赛博朋克banner添加渐变边框效果 - 类似card-gradient-border */
+        .cyberpunk-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: 0.75rem;
+            background: linear-gradient(270deg, 
+                rgba(30, 41, 82, 0.05) 0%, 
+                rgba(30, 41, 82, 0.08) 30%, 
+                rgba(185, 30, 71, 0.1) 100%);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 0;
+        }
+        
+        /* 深色模式下增加边框可见度 */
+        [data-theme="dark"] .cyberpunk-banner::before {
+            padding: 1.5px; /* 增加边框宽度 */
+            background: linear-gradient(270deg, 
+                rgba(100, 140, 255, 0.2) 0%, 
+                rgba(120, 160, 255, 0.25) 30%, 
+                rgba(255, 100, 150, 0.3) 100%);
+            box-shadow: 0 0 6px rgba(120, 160, 255, 0.15);
+        }
+        
+        /* 内部主面板样式重置 */
+        .cyber-main:nth-child(2) {
+            border-color: rgba(0, 255, 128, 0.3);
+        }
+        
+        [data-theme="light"] .cyber-main:nth-child(2) {
+            border: none !important;
+        }
+        
+        /* 卡片悬停效果 */
+        .cyberpunk-banner {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .cyberpunk-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        [data-theme="dark"] .cyberpunk-banner:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        /* 恢复左右布局设置 */
+        .cyber-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 12px;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .cyber-layout {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .cyberpunk-content {
+                padding: 16px 8px;
+            }
+            
+            .cyber-main {
+                margin-bottom: 16px;
+                padding: 12px 8px;
+            }
+            
+            /* 增加文本可读性 */
+            .cyber-main h1.glitch-text {
+                font-size: 1.5rem; /* 更大的标题 */
+            }
+            
+            /* 按钮在移动端更大更易点击 */
+            .cyber-button {
+                padding: 8px 12px;
+                margin-right: 8px;
+            margin-bottom: 8px;
+                min-height: 36px; /* 保证触摸区域足够大 */
+                display: inline-flex;
+            align-items: center;
+                justify-content: center;
+            }
+            
+            /* 紧凑型按钮布局 */
+            .flex.flex-wrap.mb-2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            margin-bottom: 12px;
+            }
+            
+            .flex.flex-wrap.mb-2 .cyber-button {
+                margin: 0;
+                width: 100%; /* 填充网格单元格 */
+            }
+            
+            /* 调整状态指示器大小 */
+            .cyber-light {
+                width: 10px;
+                height: 10px;
+            }
+            
+            /* 终端信息更清晰 */
+            .terminal-info {
+                line-height: 1.5;
+                font-size: 0.8rem;
+            }
+            
+            /* 神经接口区域样式 */
+            .neural-interface-section {
+                margin-top: 3.5rem;
+                padding-top: 2rem;
+                padding-bottom: 1.5rem;
+            }
+            
+            /* 顶部神经接口特别样式 */
+            .neural-interface-section.top-interface {
+                margin-top: 0;
+                padding-top: 1rem;
+                padding-bottom: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .neural-interface-section.top-interface::before {
+                bottom: 0;
+                top: auto;
+            }
+            
+            /* 为底部标记移动端不同的样式 */
+            .neural-interface-section:not(.top-interface)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+                left: 25%;
+                right: 25%;
+                height: 4px;
+                background: linear-gradient(to right, transparent, var(--border-color), transparent);
+                border-radius: 2px;
+            }
+        }
+        
+        /* 超小屏幕适配 */
+        @media (max-width: 360px) {
+            .cyber-main h1.glitch-text {
+                font-size: 1.3rem;
+            }
+            
+            .cyber-button {
+                padding: 6px 10px;
+            font-size: 0.7rem;
+            }
+            
+            .terminal-info {
+                font-size: 0.75rem;
+            }
+        }
+        
+        [data-theme="light"] .glitch-line {
+            background-color: rgba(0, 90, 180, 0.8);
+        }
+        
+        [data-theme="light"] .glitch-line:nth-child(5) {
+            background-color: rgba(185, 30, 71, 0.8);
+        }
+        
+        [data-theme="light"] .cyber-light.light-red {
+            background-color: #ff1a40;
+            box-shadow: 0 0 10px rgba(255, 26, 64, 0.8);
+        }
+        
+        [data-theme="light"] .cyber-light.light-blue {
+            background-color: #0066cc;
+            box-shadow: 0 0 10px rgba(0, 102, 204, 0.8);
+        }
+        
+        [data-theme="light"] .cyber-light.light-green {
+            background-color: #00aa66;
+            box-shadow: 0 0 10px rgba(0, 170, 102, 0.8);
+        }
+        
+        [data-theme="light"] .cyber-button {
+            color: #000000;
+            border: 1px solid #70073c;
+            text-shadow: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: normal;
+        }
+        
+        [data-theme="light"] .cyber-button:hover {
+            background-color: rgba(112, 7, 60, 0.15);
+            box-shadow: none;
+        }
+        
+        [data-theme="light"] .cyber-button::before {
+            background: none;
+        }
+        
+        [data-theme="light"] p[style*="color: #fcee0a"],
+        [data-theme="light"] span[style*="color: #fcee0a"],
+        [data-theme="light"] div[style*="color: #fcee0a"] {
+            color: #994d00 !important;
+            text-shadow: 0 0 5px rgba(153, 77, 0, 0.4) !important;
+            font-weight: bold !important;
+        }
+        
+        [data-theme="light"] span[style*="color: #fcee0a; font-weight: bold"] {
+            color: #994d00 !important;
+            text-shadow: 0 0 5px rgba(153, 77, 0, 0.4) !important;
+            font-weight: bold !important;
+        }
+        
+        [data-theme="light"] div.mb-2.text-xs[style*="color: #fcee0a; font-family: monospace"] {
+            color: #994d00 !important;
+            text-shadow: 0 0 5px rgba(153, 77, 0, 0.4) !important;
+            font-weight: bold !important;
+        }
+
+        /* 终端信息的主题相关样式 */
+        .terminal-info {
+            color: red; /* 浅色模式下为红色 */
+            position: relative;
+            animation: terminalGlitch 8s infinite;
+        }
+        
+        /* 字符替换效果脚本 */
+        .terminal-scramble {
+            animation: textScramble 0.1s linear;
+        }
+        
+        [data-theme="dark"] .terminal-info {
+            color: #fcee0a; /* 深色模式下为黄色 */
+            text-shadow: 0 0 5px rgba(252, 238, 10, 0.5); /* 深色模式下的文字阴影效果 */
+        }
+        
+        .terminal-info-label {
+            font-weight: bold;
+        }
+        
+        [data-theme="dark"] .terminal-info-label {
+            color: #fcee0a; /* 深色模式下为黄色 */
+            text-shadow: 0 0 5px rgba(252, 238, 10, 0.5);
+        }
+        
+        /* 终端故障闪烁动画 */
+        @keyframes terminalGlitch {
+            0%, 100% { 
+                transform: translate(0, 0) skew(0deg); 
+                opacity: 1;
+            }
+            92% { 
+                transform: translate(0, 0) skew(0deg); 
+                opacity: 1;
+            }
+            92.5% { 
+                transform: translate(-1px, 1px) skew(0.5deg); 
+                opacity: 0.9;
+            }
+            93% { 
+                transform: translate(1px, -1px) skew(-0.5deg); 
+                opacity: 0.8;
+            }
+            93.5% { 
+                transform: translate(-1px, 0) skew(0deg); 
+                opacity: 0.9;
+                filter: hue-rotate(5deg);
+            }
+            94% { 
+                transform: translate(0, 0) skew(0deg); 
+                opacity: 1;
+                filter: hue-rotate(0deg);
+            }
+            97% { 
+                transform: translate(0, 0) skew(0deg); 
+                opacity: 1;
+            }
+            97.5% { 
+                transform: translate(2px, -2px) skew(1deg); 
+                opacity: 0.7;
+                filter: saturate(200%) brightness(120%);
+            }
+            98% { 
+                transform: translate(-2px, 1px) skew(-1deg); 
+                opacity: 0.8;
+                filter: saturate(100%) brightness(100%);
+            }
+            98.5% { 
+                transform: translate(0, 0) skew(0deg); 
+                opacity: 1;
+            }
+        }
+        
+        /* 移动端按钮触感反馈 */
+        @media (hover: none) {
+            .cyber-button:active {
+                transform: scale(0.95);
+                opacity: 0.8;
+                transition: transform 0.1s ease, opacity 0.1s ease;
+            }
+        }
+        
+        /* 增强故障效果的伪元素 */
+        .terminal-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            opacity: 0;
+            mix-blend-mode: overlay;
+            animation: glitchOverlay 8s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes glitchOverlay {
+            0%, 100% { opacity: 0; background: transparent; }
+            93% { opacity: 0; background: transparent; }
+            93.5% { opacity: 0.1; background: rgba(255,0,0,0.1); }
+            94% { opacity: 0; background: transparent; }
+            97.5% { opacity: 0; background: transparent; }
+            98% { opacity: 0.2; background: rgba(0,255,255,0.1); }
+            98.5% { opacity: 0; background: transparent; }
+        }
+        
+        /* 闪烁光标效果 */
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background-color: currentColor;
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: cursorBlink 1.2s step-end infinite;
+        }
+        
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+
+        
+        /* 字符替换动画 */
+        @keyframes textScramble {
+            0% { transform: translateX(-1px); }
+            25% { transform: translateX(1px); }
+            50% { transform: translateX(-0.5px); }
+            75% { transform: translateX(0.5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* 为神经接口模块添加间隔 */
+        .neural-interface-section {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            padding-top: 1rem;
+            clear: both;
+            position: relative;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* 顶部神经接口终端模块特殊样式 */
+        .neural-interface-section.top-interface {
+            margin-top: 0;
+            padding-top: 0.5rem;
+            border-top: none;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .neural-interface-section.top-interface::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-color), transparent);
+        }
+        
+        /* 移动端的额外分隔效果 */
+        @media (max-width: 768px) {
+            .neural-interface-section {
+                margin-top: 3rem; /* 移动端增加更多间距 */
+                padding-top: 2rem;
+                padding-bottom: 1rem;
+                position: relative;
+            }
+            
+            /* 顶部神经接口特殊移动端样式 */
+            .neural-interface-section.top-interface {
+                margin-top: 0;
+                padding-top: 1rem;
+                margin-bottom: 2.5rem;
+                border-bottom-width: 2px;
+            }
+            
+            .neural-interface-section.top-interface::after {
+                height: 2px;
+                background: linear-gradient(to right, transparent, var(--border-color), var(--border-color), var(--border-color), transparent);
+            }
+            
+            /* 底部神经接口分隔线 */
+            .neural-interface-section:not(.top-interface)::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 25%;
+                right: 25%;
+                height: 4px;
+                background: linear-gradient(to right, transparent, var(--border-color), transparent);
+                border-radius: 2px;
+            }
+        }
+        
+        /* 优化浅色模式下的文字显示 */
+        [data-theme="light"] .fundamentals .skill-number,
+        [data-theme="light"] .fundamentals .skill-title {
+            color: #00AA55;
+            text-shadow: none;
+        }
+        
+        [data-theme="light"] .advanced .skill-number,
+        [data-theme="light"] .advanced .skill-title {
+            color: #0088CC;
+            text-shadow: none;
+        }
+        
+        [data-theme="light"] .expertise .skill-number,
+        [data-theme="light"] .expertise .skill-title {
+            color: #666666;
+            text-shadow: none;
+        }
+        
+        /* 技能名称文字颜色优化 */
+        [data-theme="light"] .skill-item.completed .skill-name {
+            color: #333333;
+            font-weight: 600;
+        }
+        
+        [data-theme="light"] .skill-item.ongoing .skill-name {
+            color: #444444;
+            font-weight: 500;
+        }
+        
+        [data-theme="light"] .skill-item.locked .skill-name {
+            color: #777777;
+        }
+        
+        /* 进度条颜色优化 */
+        [data-theme="light"] .fundamentals .progress-bar {
+            background-color: #00AA55;
+        }
+        
+        [data-theme="light"] .advanced .completed .progress-bar {
+            background-color: #0088CC;
+        }
+        
+        [data-theme="light"] .advanced .ongoing .progress-bar {
+            background-color: #0088CC;
+        }
+        
+        [data-theme="light"] .expertise .progress-bar {
+            background-color: #CCCCCC;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+    <!-- Page transition overlay -->
+    <div id="page-transition-overlay" style="opacity: 0; background-color: rgba(255, 255, 255, 0.3);">
+    </div>
+    
+    <!-- 顶部神经接口终端 -->
+    
+    <div class="neural-interface-section top-interface">
+        <div class="container mx-auto max-w-6xl px-4 md:px-6">
+            <div class="cyberpunk-banner mb-4">
+                <!-- 故障线条 -->
+                <div class="glitch-line"></div>
+                <div class="glitch-line"></div>
+                <div class="glitch-line"></div>
+                <div class="glitch-line"></div>
+                <div class="glitch-line"></div>
+                
+                <div class="cyberpunk-content" style="padding-bottom: 0;">
+                    <div class="cyber-layout" style="gap: 12px; padding: 8px;">
+                        <div class="cyber-main" style="padding: 10px 8px;">
+                            <h1 class="text-2xl font-bold mb-1 glitch-text">NIGHTCITY.NET</h1>
+                            <p class="text-sm mb-1">// NEURAL.INTERFACE.CONNECTED</p>
+                            
+                            <div class="flex items-center mb-1">
+                                <span class="cyber-light light-blue"></span>
+                                <span class="ml-2 text-xs">CONNECTION.SECURE</span>
+                            </div>
+                            
+                            <div class="mb-1 text-xs" style="font-family: monospace;">
+                                > SCANNING NEURAL NETWORK...
+                                <span class="terminal-cursor"></span>
+                            </div>
+                            
+                            <div class="mt-2 text-xs">
+                                <div class="mb-0.5"><span style="font-weight: bold;">NEURAL INTERFACE:</span> CONNECTED // SIGNAL: 87% // ENCRYPTION: QUANTUM</div>
+                                <div class="mb-0.5"><span style="font-weight: bold;">BRAIN SYNC:</span> 93.2% // OVERLOAD RISK: 12% // ANTI-TRACE: ACTIVE</div>
+                                <div class="mb-0.5"><span style="font-weight: bold;">DATA FLOW:</span> 1.28TB/s // MEMORY: 42% // CORE TEMP: NOMINAL</div>
+                                <div class="mb-0.5"><span style="font-weight: bold;">NETWORK NODES:</span> 724 ACTIVE // BLACKWALL: STABLE // FIREWALL: MAX</div>
+                                <div class="mb-0.5"><span style="font-weight: bold;">NEURAL NET:</span> AUTO-OPTIMIZING // AI ASSIST: ENABLED // MEM BOOST: RUNNING</div>
+                            </div>
+                            
+                            <div class="flex flex-wrap mb-0 mt-2">
+                                <span class="cyber-button text-xs py-0.5 px-2 mr-1 mb-1">NEURAL RESET</span>
+                                <span class="cyber-button text-xs py-0.5 px-2 mr-1 mb-1">BOOST MODE</span>
+                                <span class="cyber-button text-xs py-0.5 px-2 mr-1 mb-1">DISCONNECT</span>
+                                <span class="cyber-button text-xs py-0.5 px-2 mr-1 mb-1">MEM SCAN</span>
+                                <span class="cyber-button text-xs py-0.5 px-2 mr-1 mb-1">GRID VIEW</span>
+                            </div>
+                        </div>
+                        
+                        <div class="cyber-main" style="padding: 10px 8px;">
+                            <h1 class="text-2xl font-bold mb-2 glitch-text">RICK TSUI</h1>
+                            <p class="text-sm mb-3" style="font-style: italic;">Exploring the Realities of AI Development</p>
+                            
+                            <div class="mb-3">
+                                <span class="location-tag" style="background-color: var(--custom-blue); color: white; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; margin-right: 0.5rem;">Los Angeles</span>
+                                <span class="location-tag" style="background-color: var(--custom-blue); color: white; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; margin-right: 0.5rem;">Vancouver</span>
+                                <span class="location-tag" style="background-color: var(--custom-blue); color: white; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; margin-right: 0.5rem;">Shanghai</span>
+                                <span class="location-tag" style="background-color: var(--custom-red); color: white; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem;">Chengdu</span>
+                            </div>
+
+                            <div class="text-xs terminal-info">
+                                <div class="mb-1"><strong class="detail-label">Education:</strong> Computer Science (B.S. & M.S.), UCLA, 2015</div>
+                                <div class="mb-1"><strong class="detail-label">Research Focus:</strong> AI and software systems, NLP, Multimodal learning, Human–AI interaction</div>
+                                
+                                <div class="mt-3"><strong class="detail-label">Technologies:</strong></div>
+                                <div class="flex flex-wrap gap-x-3 gap-y-1 mt-1">
+                                    <span class="tech-item !text-xs"><i class="fab fa-python mr-1"></i>Python</span>
+                                    <span class="tech-item !text-xs"><i class="fab fa-react mr-1"></i>React</span>
+                                    <span class="tech-item !text-xs"><i class="fas fa-database mr-1"></i>PostgreSQL</span>
+                                    <span class="tech-item !text-xs"><i class="fas fa-fire mr-1"></i>PyTorch</span>
+                                    <span class="tech-item !text-xs"><i class="fas fa-robot mr-1"></i>HuggingFace</span>
+                                    <span class="tech-item !text-xs"><i class="fas fa-link mr-1"></i>LangChain</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 主内容区域 -->
+    <div class="flex-grow container mx-auto px-4 md:px-8">
+        <!-- 文章头部 -->
+<div class="max-w-5xl mx-auto mb-10" style="margin-top: 20px;">
+    <!-- 文章标题 -->
+    <h1 class="text-3xl md:text-4xl font-bold mb-3" style="color: var(--text-primary);">构建高性能电子商务平台：React与GraphQL的实战应用</h1>
+    
+    <!-- 文章元数据 -->
+    <div class="flex flex-wrap items-center text-sm mb-8 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--card-border);">
+        <div class="mr-6 mb-2">
+            <i class="far fa-calendar-alt mr-1"></i>
+            <span>May 2025</span>
+        </div>
+        
+        
+        <div class="mr-6 mb-2">
+            <i class="far fa-calendar-check mr-1"></i>
+            <span>Updated May 2025</span>
+        </div>
+        
+        
+        
+        <div class="mb-2">
+            <i class="far fa-folder-open mr-1"></i>
+            
+                <a href="/categories/React/" class="hover:text-highlight" style="color: var(--text-secondary);">
+                    React
+                </a>
+            
+        </div>
+        
+    </div>
+</div>
+
+<!-- 文章内容 -->
+<div class="max-w-4xl mx-auto relative post-page">
+    <!-- Main Content -->
+    <div class="w-full">
+        <article>
+            <!-- Content -->
+            
+            
+            <div class="prose max-w-none mx-auto">
+                
+                    <div id="article-preview">
+                        <h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>重构一个大型电子商务平台的前端系统。原有系统使用jQuery和传统的MVC架构构建，随着业务的快速发展，系统变得越来越难以维护和扩展。新的技术栈基于React、TypeScript、GraphQL和Tailwind CSS，本文将分享我们在这个项目中的技术选型、架构设计、性能优化以及遇到的挑战与解决方案。</p>
+<h2 id="技术栈选择"><a href="#技术栈选择" class="headerlink" title="技术栈选择"></a>技术栈选择</h2><h3 id="前端核心技术"><a href="#前端核心技术" class="headerlink" title="前端核心技术"></a>前端核心技术</h3><ul>
+<li><strong>React 18</strong>：利用并发渲染和自动批处理等新特性</li>
+<li><strong>TypeScript</strong>：提供类型安全和更好的开发体验</li>
+<li><strong>Apollo Client</strong>：管理GraphQL数据和本地状态</li>
+<li><strong>React Router v6</strong>：处理路由</li>
+<li><strong>Tailwind CSS</strong>：构建响应式UI</li>
+<li><strong>React Query</strong>：处理REST API请求和缓存</li>
+</ul>
+<h3 id="构建工具"><a href="#构建工具" class="headerlink" title="构建工具"></a>构建工具</h3><ul>
+<li><strong>Vite</strong>：替代Create React App，提供更快的开发和构建体验</li>
+<li><strong>ESLint &amp; Prettier</strong>：代码质量和格式化</li>
+<li><strong>Husky &amp; lint-staged</strong>：提交前代码检查</li>
+<li><strong>Vitest &amp; React Testing Library</strong>：单元测试和组件测试</li>
+</ul>
+<h2 id="项目架构设计"><a href="#项目架构设计" class="headerlink" title="项目架构设计"></a>项目架构设计</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>我们采用了基于特性的目录结构，而不是传统的按类型分组：</p><span id="article-truncation-point"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">src/</span><br><span class="line">├── assets/                # 静态资源</span><br><span class="line">├── components/            # 共享 UI 组件</span><br><span class="line">│   ├── common/            # 基础组件（按钮、输入框等）</span><br><span class="line">│   └── layout/            # 布局组件</span><br><span class="line">├── features/              # 按业务功能组织的模块</span><br><span class="line">│   ├── product/           # 产品相关功能</span><br><span class="line">│   │   ├── api/           # GraphQL 查询和变更</span><br><span class="line">│   │   ├── components/    # 产品特定组件</span><br><span class="line">│   │   ├── hooks/         # 产品相关自定义钩子</span><br><span class="line">│   │   ├── types/         # TypeScript 类型定义</span><br><span class="line">│   │   └── utils/         # 工具函数</span><br><span class="line">│   ├── cart/              # 购物车功能</span><br><span class="line">│   ├── checkout/          # 结账流程</span><br><span class="line">│   └── user/              # 用户账户管理</span><br><span class="line">├── hooks/                 # 全局共享钩子</span><br><span class="line">├── lib/                   # 第三方库配置</span><br><span class="line">├── routes/                # 路由定义</span><br><span class="line">├── services/              # API 服务</span><br><span class="line">├── store/                 # 全局状态管理</span><br><span class="line">├── types/                 # 全局类型定义</span><br><span class="line">└── utils/                 # 全局工具函数</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="GraphQL架构"><a href="#GraphQL架构" class="headerlink" title="GraphQL架构"></a>GraphQL架构</h3><p>我们使用Apollo Client管理GraphQL数据流，并实现了以下架构：</p>
+<ol>
+<li><strong>Fragment驱动开发</strong>：为每个组件定义明确的数据需求</li>
+<li><strong>类型生成</strong>：使用GraphQL Code Generator自动生成TypeScript类型</li>
+<li><strong>本地状态管理</strong>：利用Apollo Client的缓存作为单一数据源</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 产品详情页查询示例</span></span><br><span class="line"><span class="keyword">import</span> &#123; gql &#125; <span class="keyword">from</span> <span class="string">&#x27;@apollo/client&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">PRODUCT_CARD_FRAGMENT</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./fragments&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">GET_PRODUCT_DETAIL</span> = gql`<span class="language-graphql"></span></span><br><span class="line"><span class="language-graphql">  <span class="keyword">query</span> GetProductDetail<span class="punctuation">(</span><span class="variable">$id</span>: ID<span class="punctuation">!</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span></span><br><span class="line"><span class="language-graphql">    product<span class="punctuation">(</span><span class="symbol">id</span><span class="punctuation">:</span> <span class="variable">$id</span>) <span class="punctuation">&#123;</span></span></span><br><span class="line"><span class="language-graphql">      <span class="punctuation">...</span>ProductCard</span></span><br><span class="line"><span class="language-graphql">      description</span></span><br><span class="line"><span class="language-graphql">      specifications <span class="punctuation">&#123;</span></span></span><br><span class="line"><span class="language-graphql">        name</span></span><br><span class="line"><span class="language-graphql">        value</span></span><br><span class="line"><span class="language-graphql">      <span class="punctuation">&#125;</span></span></span><br><span class="line"><span class="language-graphql">      relatedProducts <span class="punctuation">&#123;</span></span></span><br><span class="line"><span class="language-graphql">        <span class="punctuation">...</span>ProductCard</span></span><br><span class="line"><span class="language-graphql">      <span class="punctuation">&#125;</span></span></span><br><span class="line"><span class="language-graphql">    <span class="punctuation">&#125;</span></span></span><br><span class="line"><span class="language-graphql">  <span class="punctuation">&#125;</span></span></span><br><span class="line"><span class="language-graphql">  </span><span class="subst">$&#123;PRODUCT_CARD_FRAGMENT&#125;</span><span class="language-graphql"></span></span><br><span class="line"><span class="language-graphql">`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中使用</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ProductDetail</span> = (<span class="params">&#123; productId &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data, loading, error &#125; = <span class="title function_">useQuery</span>(<span class="variable constant_">GET_PRODUCT_DETAIL</span>, &#123;</span><br><span class="line">    <span class="attr">variables</span>: &#123; <span class="attr">id</span>: productId &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (loading) <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">ProductSkeleton</span> /&gt;</span></span>;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">ErrorMessage</span> <span class="attr">error</span>=<span class="string">&#123;error&#125;</span> /&gt;</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; product &#125; = data;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;product-detail&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;/* 产品详情UI */&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件设计模式"><a href="#组件设计模式" class="headerlink" title="组件设计模式"></a>组件设计模式</h2><h3 id="复合组件模式"><a href="#复合组件模式" class="headerlink" title="复合组件模式"></a>复合组件模式</h3><p>为了构建灵活且可维护的UI组件，我们大量使用了复合组件模式：</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 产品筛选器组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; createContext, useContext, useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建上下文</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">FilterContext</span> = createContext&lt;<span class="title class_">FilterContextType</span> | <span class="literal">undefined</span>&gt;(<span class="literal">undefined</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 主组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">ProductFilter</span>: <span class="title class_">React</span>.<span class="property">FC</span>&lt;<span class="title class_">ProductFilterProps</span>&gt; &amp; &#123;</span><br><span class="line">  <span class="title class_">Category</span>: <span class="keyword">typeof</span> <span class="title class_">FilterCategory</span>;</span><br><span class="line">  <span class="title class_">Price</span>: <span class="keyword">typeof</span> <span class="title class_">FilterPrice</span>;</span><br><span class="line">  <span class="title class_">Rating</span>: <span class="keyword">typeof</span> <span class="title class_">FilterRating</span>;</span><br><span class="line">  <span class="title class_">ApplyButton</span>: <span class="keyword">typeof</span> <span class="title class_">ApplyButton</span>;</span><br><span class="line">&#125; = <span class="function">(<span class="params">&#123; children, onApply &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [filters, setFilters] = <span class="title function_">useState</span>(&#123;</span><br><span class="line">    <span class="attr">categories</span>: [],</span><br><span class="line">    <span class="attr">priceRange</span>: &#123; <span class="attr">min</span>: <span class="number">0</span>, <span class="attr">max</span>: <span class="number">1000</span> &#125;,</span><br><span class="line">    <span class="attr">rating</span>: <span class="number">0</span>,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">updateFilter</span> = (<span class="params">key, value</span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setFilters</span>(<span class="function"><span class="params">prev</span> =&gt;</span> (&#123; ...prev, [key]: value &#125;));</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleApply</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">onApply</span>(filters);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">FilterContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">filters</span>, <span class="attr">updateFilter</span>, <span class="attr">handleApply</span> &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;bg-white rounded-lg shadow p-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> <span class="attr">className</span>=<span class="string">&quot;text-lg font-medium mb-4&quot;</span>&gt;</span>筛选商品<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">FilterContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子组件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">FilterCategory</span> = (<span class="params">&#123; categories &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; filters, updateFilter &#125; = <span class="title function_">useFilterContext</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;mb-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h4</span> <span class="attr">className</span>=<span class="string">&quot;font-medium mb-2&quot;</span>&gt;</span>分类<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;categories.map(category =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">key</span>=<span class="string">&#123;category.id&#125;</span> <span class="attr">className</span>=<span class="string">&quot;flex items-center mb-1&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">checked</span>=<span class="string">&#123;filters.categories.includes(category.id)&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">onChange</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">              // 切换类别选择</span></span><br><span class="line"><span class="language-xml">              const newCategories = filters.categories.includes(category.id)</span></span><br><span class="line"><span class="language-xml">                ? filters.categories.filter(id =&gt; id !== category.id)</span></span><br><span class="line"><span class="language-xml">                : [...filters.categories, category.id];</span></span><br><span class="line"><span class="language-xml">              updateFilter(&#x27;categories&#x27;, newCategories);</span></span><br><span class="line"><span class="language-xml">            &#125;&#125;</span></span><br><span class="line"><span class="language-xml">            className=&quot;mr-2&quot;</span></span><br><span class="line"><span class="language-xml">          /&gt;</span></span><br><span class="line"><span class="language-xml">          &#123;category.name&#125;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他子组件...</span></span><br><span class="line"><span class="title class_">ProductFilter</span>.<span class="property">Category</span> = <span class="title class_">FilterCategory</span>;</span><br><span class="line"><span class="title class_">ProductFilter</span>.<span class="property">Price</span> = <span class="title class_">FilterPrice</span>;</span><br><span class="line"><span class="title class_">ProductFilter</span>.<span class="property">Rating</span> = <span class="title class_">FilterRating</span>;</span><br><span class="line"><span class="title class_">ProductFilter</span>.<span class="property">ApplyButton</span> = <span class="title class_">ApplyButton</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用方式</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">ProductFilter</span> <span class="attr">onApply</span>=<span class="string">&#123;handleApplyFilters&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">ProductFilter.Category</span> <span class="attr">categories</span>=<span class="string">&#123;categories&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">ProductFilter.Price</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">ProductFilter.Rating</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">ProductFilter.ApplyButton</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">ProductFilter</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义钩子"><a href="#自定义钩子" class="headerlink" title="自定义钩子"></a>自定义钩子</h3><p>我们将复杂的业务逻辑封装在自定义钩子中，提高代码的可测试性和可重用性：</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 购物车钩子</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useCart</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data, loading, error &#125; = <span class="title function_">useQuery</span>(<span class="variable constant_">GET_CART</span>);</span><br><span class="line">  <span class="keyword">const</span> [addToCart] = <span class="title function_">useMutation</span>(<span class="variable constant_">ADD_TO_CART</span>);</span><br><span class="line">  <span class="keyword">const</span> [removeFromCart] = <span class="title function_">useMutation</span>(<span class="variable constant_">REMOVE_FROM_CART</span>);</span><br><span class="line">  <span class="keyword">const</span> [updateQuantity] = <span class="title function_">useMutation</span>(<span class="variable constant_">UPDATE_QUANTITY</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> cart = data?.<span class="property">cart</span> || &#123; <span class="attr">items</span>: [], <span class="attr">totalItems</span>: <span class="number">0</span>, <span class="attr">totalPrice</span>: <span class="number">0</span> &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">addItem</span> = <span class="keyword">async</span> (<span class="params">productId, quantity = <span class="number">1</span>, options = &#123;&#125;</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">addToCart</span>(&#123;</span><br><span class="line">        <span class="attr">variables</span>: &#123; productId, quantity, options &#125;,</span><br><span class="line">        <span class="attr">update</span>: <span class="function">(<span class="params">cache, &#123; data: &#123; addToCart &#125; &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 更新缓存中的购物车数据</span></span><br><span class="line">          cache.<span class="title function_">writeQuery</span>(&#123;</span><br><span class="line">            <span class="attr">query</span>: <span class="variable constant_">GET_CART</span>,</span><br><span class="line">            <span class="attr">data</span>: &#123; <span class="attr">cart</span>: addToCart &#125;,</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">false</span>, <span class="attr">error</span>: err &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 其他购物车操作...</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    cart,</span><br><span class="line">    loading,</span><br><span class="line">    error,</span><br><span class="line">    addItem,</span><br><span class="line">    removeItem,</span><br><span class="line">    updateItemQuantity,</span><br><span class="line">    clearCart,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中使用</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ProductCard</span> = (<span class="params">&#123; product &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; addItem, cart &#125; = <span class="title function_">useCart</span>();</span><br><span class="line">  <span class="keyword">const</span> isInCart = cart.<span class="property">items</span>.<span class="title function_">some</span>(<span class="function"><span class="params">item</span> =&gt;</span> item.<span class="property">product</span>.<span class="property">id</span> === product.<span class="property">id</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;product-card&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;/* 产品信息 */&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> addItem(product.id)&#125;</span></span><br><span class="line"><span class="language-xml">        disabled=&#123;isInCart&#125;</span></span><br><span class="line"><span class="language-xml">        className=&quot;btn btn-primary&quot;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        &#123;isInCart ? &#x27;已加入购物车&#x27; : &#x27;加入购物车&#x27;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="性能优化策略"><a href="#性能优化策略" class="headerlink" title="性能优化策略"></a>性能优化策略</h2><h3 id="代码分割"><a href="#代码分割" class="headerlink" title="代码分割"></a>代码分割</h3><p>我们使用React的<code>React.lazy</code>和<code>Suspense</code>实现基于路由的代码分割：</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 路由配置</span></span><br><span class="line"><span class="keyword">import</span> &#123; lazy, <span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; createBrowserRouter &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">PageLoader</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./components/common/PageLoader&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 懒加载页面组件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">HomePage</span> = <span class="title function_">lazy</span>(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./pages/HomePage&#x27;</span>));</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ProductListPage</span> = <span class="title function_">lazy</span>(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./pages/ProductListPage&#x27;</span>));</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ProductDetailPage</span> = <span class="title function_">lazy</span>(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./pages/ProductDetailPage&#x27;</span>));</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CartPage</span> = <span class="title function_">lazy</span>(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./pages/CartPage&#x27;</span>));</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CheckoutPage</span> = <span class="title function_">lazy</span>(<span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./pages/CheckoutPage&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> router = <span class="title function_">createBrowserRouter</span>([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    <span class="attr">element</span>: (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">PageLoader</span> /&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">HomePage</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">    ),</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/products&#x27;</span>,</span><br><span class="line">    <span class="attr">element</span>: (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">PageLoader</span> /&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ProductListPage</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">    ),</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 其他路由...</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件优化"><a href="#组件优化" class="headerlink" title="组件优化"></a>组件优化</h3><ol>
+<li><strong>React.memo</strong>：对纯展示组件使用memo减少不必要的重渲染</li>
+<li><strong>useMemo和useCallback</strong>：优化计算密集型操作和事件处理函数</li>
+</ol>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">ProductGrid</span> = <span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="function">(<span class="params">&#123; products &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;grid grid-cols-1 md:grid-cols-3 gap-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;products.map(product =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ProductCard</span> <span class="attr">key</span>=<span class="string">&#123;product.id&#125;</span> <span class="attr">product</span>=<span class="string">&#123;product&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ProductListPage</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; data, loading &#125; = <span class="title function_">useQuery</span>(<span class="variable constant_">GET_PRODUCTS</span>, &#123;</span><br><span class="line">    <span class="attr">variables</span>: &#123; filter &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 使用useMemo缓存过滤和排序结果</span></span><br><span class="line">  <span class="keyword">const</span> sortedProducts = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!data?.<span class="property">products</span>) <span class="keyword">return</span> [];</span><br><span class="line">    <span class="keyword">return</span> [...data.<span class="property">products</span>].<span class="title function_">sort</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (sortOrder === <span class="string">&#x27;price-asc&#x27;</span>) <span class="keyword">return</span> a.<span class="property">price</span> - b.<span class="property">price</span>;</span><br><span class="line">      <span class="keyword">if</span> (sortOrder === <span class="string">&#x27;price-desc&#x27;</span>) <span class="keyword">return</span> b.<span class="property">price</span> - a.<span class="property">price</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [data?.<span class="property">products</span>, sortOrder]);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 使用useCallback缓存事件处理函数</span></span><br><span class="line">  <span class="keyword">const</span> handleSortChange = <span class="title function_">useCallback</span>(<span class="function">(<span class="params">newSortOrder</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setSortOrder</span>(newSortOrder);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">SortControls</span> <span class="attr">onSortChange</span>=<span class="string">&#123;handleSortChange&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;loading ? <span class="tag">&lt;<span class="name">ProductGridSkeleton</span> /&gt;</span> : <span class="tag">&lt;<span class="name">ProductGrid</span> <span class="attr">products</span>=<span class="string">&#123;sortedProducts&#125;</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h3><p>我们实现了一个响应式图片组件，结合现代图像格式和懒加载：</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">ResponsiveImage</span> = (<span class="params">&#123; src, alt, sizes, className &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 生成不同尺寸的图片URL</span></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">generateSrcSet</span> = (<span class="params">imageSrc</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> widths = [<span class="number">320</span>, <span class="number">640</span>, <span class="number">960</span>, <span class="number">1280</span>];</span><br><span class="line">    <span class="keyword">return</span> widths</span><br><span class="line">      .<span class="title function_">map</span>(<span class="function"><span class="params">width</span> =&gt;</span> <span class="string">`<span class="subst">$&#123;getOptimizedImageUrl(imageSrc, width)&#125;</span> <span class="subst">$&#123;width&#125;</span>w`</span>)</span><br><span class="line">      .<span class="title function_">join</span>(<span class="string">&#x27;, &#x27;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">src</span>=<span class="string">&#123;src&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">srcSet</span>=<span class="string">&#123;generateSrcSet(src)&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">sizes</span>=<span class="string">&#123;sizes</span> || &#x27;(<span class="attr">max-width:</span> <span class="attr">768px</span>) <span class="attr">100vw</span>, <span class="attr">50vw</span>&#x27;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">alt</span>=<span class="string">&#123;alt&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">loading</span>=<span class="string">&quot;lazy&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span>=<span class="string">&#123;className&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用WebP格式并进行CDN优化</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">getOptimizedImageUrl</span> = (<span class="params">url, width</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 假设我们使用像Cloudinary这样的服务</span></span><br><span class="line">  <span class="keyword">return</span> url.<span class="title function_">replace</span>(<span class="string">&#x27;/upload/&#x27;</span>, <span class="string">`/upload/w_<span class="subst">$&#123;width&#125;</span>,f_auto,q_auto/`</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="状态管理策略"><a href="#状态管理策略" class="headerlink" title="状态管理策略"></a>状态管理策略</h2><p>我们采用了混合状态管理策略：</p>
+<ol>
+<li><strong>Apollo Client缓存</strong>：作为远程数据的主要存储</li>
+<li><strong>React Context</strong>：管理UI状态和主题</li>
+<li><strong>React Query</strong>：处理非GraphQL API的数据获取和缓存</li>
+</ol>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 主题上下文</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">ThemeContext</span> = <span class="title function_">createContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">ThemeProvider</span> = (<span class="params">&#123; children &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [theme, setTheme] = <span class="title function_">useState</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;theme&#x27;</span>) || <span class="string">&#x27;light&#x27;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="title function_">setAttribute</span>(<span class="string">&#x27;data-theme&#x27;</span>, theme);</span><br><span class="line">    <span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;theme&#x27;</span>, theme);</span><br><span class="line">  &#125;, [theme]);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">toggleTheme</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="title function_">setTheme</span>(<span class="function"><span class="params">prev</span> =&gt;</span> (prev === <span class="string">&#x27;light&#x27;</span> ? <span class="string">&#x27;dark&#x27;</span> : <span class="string">&#x27;light&#x27;</span>));</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ThemeContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">theme</span>, <span class="attr">toggleTheme</span> &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ThemeContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 购物车状态管理</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CartContext</span> = <span class="title function_">createContext</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">CartProvider</span> = (<span class="params">&#123; children &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; cart, loading, addItem, removeItem, updateItemQuantity &#125; = <span class="title function_">useCart</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">CartContext.Provider</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">value</span>=<span class="string">&#123;&#123;</span> <span class="attr">cart</span>, <span class="attr">loading</span>, <span class="attr">addItem</span>, <span class="attr">removeItem</span>, <span class="attr">updateItemQuantity</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">CartContext.Provider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 应用入口点</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ApolloProvider</span> <span class="attr">client</span>=<span class="string">&#123;apolloClient&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">QueryClientProvider</span> <span class="attr">client</span>=<span class="string">&#123;queryClient&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ThemeProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">CartProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">RouterProvider</span> <span class="attr">router</span>=<span class="string">&#123;router&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">CartProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">ThemeProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">QueryClientProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ApolloProvider</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试策略"><a href="#测试策略" class="headerlink" title="测试策略"></a>测试策略</h2><p>我们采用了多层次的测试策略：</p>
+<ol>
+<li><strong>单元测试</strong>：使用Vitest测试工具函数和钩子</li>
+<li><strong>组件测试</strong>：使用React Testing Library测试组件行为</li>
+<li><strong>集成测试</strong>：测试组件之间的交互</li>
+<li><strong>E2E测试</strong>：使用Cypress测试关键用户流程</li>
+</ol>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 钩子测试示例</span></span><br><span class="line"><span class="keyword">import</span> &#123; renderHook, act &#125; <span class="keyword">from</span> <span class="string">&#x27;@testing-library/react-hooks&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">MockedProvider</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@apollo/client/testing&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useCart &#125; <span class="keyword">from</span> <span class="string">&#x27;./useCart&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">GET_CART</span>, <span class="variable constant_">ADD_TO_CART</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;../api/cartQueries&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mocks = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">request</span>: &#123;</span><br><span class="line">      <span class="attr">query</span>: <span class="variable constant_">GET_CART</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">result</span>: &#123;</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">cart</span>: &#123;</span><br><span class="line">          <span class="attr">items</span>: [],</span><br><span class="line">          <span class="attr">totalItems</span>: <span class="number">0</span>,</span><br><span class="line">          <span class="attr">totalPrice</span>: <span class="number">0</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">request</span>: &#123;</span><br><span class="line">      <span class="attr">query</span>: <span class="variable constant_">ADD_TO_CART</span>,</span><br><span class="line">      <span class="attr">variables</span>: &#123; <span class="attr">productId</span>: <span class="string">&#x27;1&#x27;</span>, <span class="attr">quantity</span>: <span class="number">1</span>, <span class="attr">options</span>: &#123;&#125; &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">result</span>: &#123;</span><br><span class="line">      <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">addToCart</span>: &#123;</span><br><span class="line">          <span class="attr">items</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">id</span>: <span class="string">&#x27;cart-item-1&#x27;</span>,</span><br><span class="line">              <span class="attr">product</span>: &#123; <span class="attr">id</span>: <span class="string">&#x27;1&#x27;</span>, <span class="attr">name</span>: <span class="string">&#x27;Test Product&#x27;</span>, <span class="attr">price</span>: <span class="number">100</span> &#125;,</span><br><span class="line">              <span class="attr">quantity</span>: <span class="number">1</span>,</span><br><span class="line">              <span class="attr">totalPrice</span>: <span class="number">100</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">          ],</span><br><span class="line">          <span class="attr">totalItems</span>: <span class="number">1</span>,</span><br><span class="line">          <span class="attr">totalPrice</span>: <span class="number">100</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="title function_">test</span>(<span class="string">&#x27;should add item to cart&#x27;</span>, <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; result, waitForNextUpdate &#125; = <span class="title function_">renderHook</span>(<span class="function">() =&gt;</span> <span class="title function_">useCart</span>(), &#123;</span><br><span class="line">    <span class="attr">wrapper</span>: <span class="function">(<span class="params">&#123; children &#125;</span>) =&gt;</span> (</span><br><span class="line">      <span class="language-xml"><span class="tag">&lt;<span class="name">MockedProvider</span> <span class="attr">mocks</span>=<span class="string">&#123;mocks&#125;</span> <span class="attr">addTypename</span>=<span class="string">&#123;false&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">MockedProvider</span>&gt;</span></span></span><br><span class="line">    ),</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 初始状态</span></span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">current</span>.<span class="property">cart</span>.<span class="property">items</span>).<span class="title function_">toHaveLength</span>(<span class="number">0</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 添加商品到购物车</span></span><br><span class="line">  <span class="title function_">act</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    result.<span class="property">current</span>.<span class="title function_">addItem</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 等待异步操作完成</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">waitForNextUpdate</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 验证购物车已更新</span></span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">current</span>.<span class="property">cart</span>.<span class="property">items</span>).<span class="title function_">toHaveLength</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">current</span>.<span class="property">cart</span>.<span class="property">items</span>[<span class="number">0</span>].<span class="property">product</span>.<span class="property">id</span>).<span class="title function_">toBe</span>(<span class="string">&#x27;1&#x27;</span>);</span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">current</span>.<span class="property">cart</span>.<span class="property">totalItems</span>).<span class="title function_">toBe</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="title function_">expect</span>(result.<span class="property">current</span>.<span class="property">cart</span>.<span class="property">totalPrice</span>).<span class="title function_">toBe</span>(<span class="number">100</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="遇到的挑战与解决方案"><a href="#遇到的挑战与解决方案" class="headerlink" title="遇到的挑战与解决方案"></a>遇到的挑战与解决方案</h2><h3 id="挑战1：大型列表性能优化"><a href="#挑战1：大型列表性能优化" class="headerlink" title="挑战1：大型列表性能优化"></a>挑战1：大型列表性能优化</h3><p>在产品列表页面，当筛选和排序大量产品时，页面性能下降明显。</p>
+<p><strong>解决方案</strong>：实现虚拟滚动</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useVirtualizer &#125; <span class="keyword">from</span> <span class="string">&#x27;@tanstack/react-virtual&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">VirtualizedProductList</span> = (<span class="params">&#123; products &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> parentRef = <span class="title function_">useRef</span>(<span class="literal">null</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> rowVirtualizer = <span class="title function_">useVirtualizer</span>(&#123;</span><br><span class="line">    <span class="attr">count</span>: products.<span class="property">length</span>,</span><br><span class="line">    <span class="attr">getScrollElement</span>: <span class="function">() =&gt;</span> parentRef.<span class="property">current</span>,</span><br><span class="line">    <span class="attr">estimateSize</span>: <span class="function">() =&gt;</span> <span class="number">300</span>, <span class="comment">// 估计每个产品卡片的高度</span></span><br><span class="line">    <span class="attr">overscan</span>: <span class="number">5</span>, <span class="comment">// 预渲染额外的项目</span></span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> </span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">ref</span>=<span class="string">&#123;parentRef&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span>=<span class="string">&quot;h-[800px] overflow-auto&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">height:</span> `$&#123;<span class="attr">rowVirtualizer.getTotalSize</span>()&#125;<span class="attr">px</span>`,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">width:</span> &#x27;<span class="attr">100</span>%&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">position:</span> &#x27;<span class="attr">relative</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;rowVirtualizer.getVirtualItems().map(virtualRow =&gt; (</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">key</span>=<span class="string">&#123;virtualRow.index&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">position:</span> &#x27;<span class="attr">absolute</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">top:</span> <span class="attr">0</span>,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">left:</span> <span class="attr">0</span>,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">width:</span> &#x27;<span class="attr">100</span>%&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">height:</span> `$&#123;<span class="attr">virtualRow.size</span>&#125;<span class="attr">px</span>`,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">              <span class="attr">transform:</span> `<span class="attr">translateY</span>($&#123;<span class="attr">virtualRow.start</span>&#125;<span class="attr">px</span>)`,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          &gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ProductCard</span> <span class="attr">product</span>=<span class="string">&#123;products[virtualRow.index]&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        ))&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="挑战2：表单状态管理"><a href="#挑战2：表单状态管理" class="headerlink" title="挑战2：表单状态管理"></a>挑战2：表单状态管理</h3><p>结账流程中的复杂表单状态管理变得难以维护。</p>
+<p><strong>解决方案</strong>：使用React Hook Form和Zod进行表单验证</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useForm &#125; <span class="keyword">from</span> <span class="string">&#x27;react-hook-form&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; zodResolver &#125; <span class="keyword">from</span> <span class="string">&#x27;@hookform/resolvers/zod&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; z &#125; <span class="keyword">from</span> <span class="string">&#x27;zod&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义表单验证模式</span></span><br><span class="line"><span class="keyword">const</span> shippingSchema = z.<span class="title function_">object</span>(&#123;</span><br><span class="line">  <span class="attr">fullName</span>: z.<span class="title function_">string</span>().<span class="title function_">min</span>(<span class="number">2</span>, <span class="string">&#x27;姓名至少需要2个字符&#x27;</span>),</span><br><span class="line">  <span class="attr">address</span>: z.<span class="title function_">string</span>().<span class="title function_">min</span>(<span class="number">5</span>, <span class="string">&#x27;请输入完整地址&#x27;</span>),</span><br><span class="line">  <span class="attr">city</span>: z.<span class="title function_">string</span>().<span class="title function_">min</span>(<span class="number">2</span>, <span class="string">&#x27;请输入城市名称&#x27;</span>),</span><br><span class="line">  <span class="attr">zipCode</span>: z.<span class="title function_">string</span>().<span class="title function_">regex</span>(<span class="regexp">/^\d&#123;6&#125;$/</span>, <span class="string">&#x27;邮政编码必须是6位数字&#x27;</span>),</span><br><span class="line">  <span class="attr">phone</span>: z.<span class="title function_">string</span>().<span class="title function_">regex</span>(<span class="regexp">/^1[3-9]\d&#123;9&#125;$/</span>, <span class="string">&#x27;请输入有效的手机号码&#x27;</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ShippingForm</span> = (<span class="params">&#123; onSubmit &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;</span><br><span class="line">    register,</span><br><span class="line">    handleSubmit,</span><br><span class="line">    <span class="attr">formState</span>: &#123; errors &#125;,</span><br><span class="line">  &#125; = <span class="title function_">useForm</span>(&#123;</span><br><span class="line">    <span class="attr">resolver</span>: <span class="title function_">zodResolver</span>(shippingSchema),</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">onSubmit</span>=<span class="string">&#123;handleSubmit(onSubmit)&#125;</span> <span class="attr">className</span>=<span class="string">&quot;space-y-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">htmlFor</span>=<span class="string">&quot;fullName&quot;</span> <span class="attr">className</span>=<span class="string">&quot;block text-sm font-medium&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          收货人姓名</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">id</span>=<span class="string">&quot;fullName&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">type</span>=<span class="string">&quot;text&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          &#123;<span class="attr">...register</span>(&#x27;<span class="attr">fullName</span>&#x27;)&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          <span class="attr">className</span>=<span class="string">&#123;</span>`<span class="attr">mt-1</span> <span class="attr">block</span> <span class="attr">w-full</span> <span class="attr">rounded-md</span> <span class="attr">border</span> $&#123;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">            <span class="attr">errors.fullName</span> ? &#x27;<span class="attr">border-red-500</span>&#x27; <span class="attr">:</span> &#x27;<span class="attr">border-gray-300</span>&#x27;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">          &#125;`&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        /&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;errors.fullName &amp;&amp; (</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;mt-1 text-sm text-red-500&quot;</span>&gt;</span>&#123;errors.fullName.message&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        )&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      </span></span><br><span class="line"><span class="language-xml">      &#123;/* 其他表单字段 */&#125;</span></span><br><span class="line"><span class="language-xml">      </span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">className</span>=<span class="string">&quot;w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">        保存配送信息</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="挑战3：国际化支持"><a href="#挑战3：国际化支持" class="headerlink" title="挑战3：国际化支持"></a>挑战3：国际化支持</h3><p>需要支持多语言，同时保持良好的性能。</p>
+<p><strong>解决方案</strong>：使用i18next和代码分割按语言加载翻译文件</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> i18n <span class="keyword">from</span> <span class="string">&#x27;i18next&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; initReactI18next, useTranslation &#125; <span class="keyword">from</span> <span class="string">&#x27;react-i18next&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">LanguageDetector</span> <span class="keyword">from</span> <span class="string">&#x27;i18next-browser-languagedetector&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Backend</span> <span class="keyword">from</span> <span class="string">&#x27;i18next-http-backend&#x27;</span>;</span><br><span class="line"></span><br><span class="line">i18n</span><br><span class="line">  .<span class="title function_">use</span>(<span class="title class_">Backend</span>) <span class="comment">// 懒加载翻译文件</span></span><br><span class="line">  .<span class="title function_">use</span>(<span class="title class_">LanguageDetector</span>) <span class="comment">// 自动检测用户语言</span></span><br><span class="line">  .<span class="title function_">use</span>(initReactI18next)</span><br><span class="line">  .<span class="title function_">init</span>(&#123;</span><br><span class="line">    <span class="attr">fallbackLng</span>: <span class="string">&#x27;zh&#x27;</span>,</span><br><span class="line">    <span class="attr">ns</span>: [<span class="string">&#x27;common&#x27;</span>, <span class="string">&#x27;product&#x27;</span>, <span class="string">&#x27;checkout&#x27;</span>],</span><br><span class="line">    <span class="attr">defaultNS</span>: <span class="string">&#x27;common&#x27;</span>,</span><br><span class="line">    <span class="attr">backend</span>: &#123;</span><br><span class="line">      <span class="attr">loadPath</span>: <span class="string">&#x27;/locales/&#123;&#123;lng&#125;&#125;/&#123;&#123;ns&#125;&#125;.json&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 语言切换组件</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">LanguageSwitcher</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; i18n &#125; = <span class="title function_">useTranslation</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">changeLanguage</span> = <span class="keyword">async</span> (<span class="params">lng</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> i18n.<span class="title function_">changeLanguage</span>(lng);</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">documentElement</span>.<span class="property">lang</span> = lng;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;flex space-x-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> changeLanguage(&#x27;zh&#x27;)&#125;</span></span><br><span class="line"><span class="language-xml">        className=&#123;`px-2 py-1 rounded $&#123;</span></span><br><span class="line"><span class="language-xml">          i18n.language === &#x27;zh&#x27; ? &#x27;bg-blue-600 text-white&#x27; : &#x27;bg-gray-200&#x27;</span></span><br><span class="line"><span class="language-xml">        &#125;`&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        中文</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> changeLanguage(&#x27;en&#x27;)&#125;</span></span><br><span class="line"><span class="language-xml">        className=&#123;`px-2 py-1 rounded $&#123;</span></span><br><span class="line"><span class="language-xml">          i18n.language === &#x27;en&#x27; ? &#x27;bg-blue-600 text-white&#x27; : &#x27;bg-gray-200&#x27;</span></span><br><span class="line"><span class="language-xml">        &#125;`&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        English</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在组件中使用</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">ProductDetail</span> = (<span class="params">&#123; product &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; t &#125; = <span class="title function_">useTranslation</span>(<span class="string">&#x27;product&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;product.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;t(&#x27;price&#x27;)&#125;: ¥&#123;product.price&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">className</span>=<span class="string">&quot;btn btn-primary&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;t(&#x27;addToCart&#x27;)&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署与监控"><a href="#部署与监控" class="headerlink" title="部署与监控"></a>部署与监控</h2><p>我们使用GitHub Actions设置了CI&#x2F;CD流程，并部署到AWS上：</p>
+<ol>
+<li><strong>构建流程</strong>：使用Vite构建生产版本</li>
+<li><strong>部署目标</strong>：AWS S3 + CloudFront作为CDN</li>
+<li><strong>监控</strong>：使用Sentry进行错误跟踪和性能监控</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># .github/workflows/deploy.yml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [<span class="string">main</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">build-and-deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v3</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;18&#x27;</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">tests</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">test</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">S3</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">jakejarvis/s3-sync-action@master</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">args:</span> <span class="string">--delete</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">AWS_S3_BUCKET:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.AWS_S3_BUCKET</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">AWS_ACCESS_KEY_ID:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.AWS_ACCESS_KEY_ID</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">AWS_SECRET_ACCESS_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.AWS_SECRET_ACCESS_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">SOURCE_DIR:</span> <span class="string">&#x27;dist&#x27;</span></span><br><span class="line">      </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Invalidate</span> <span class="string">CloudFront</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">chetan/invalidate-cloudfront-action@v2</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">DISTRIBUTION:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.CLOUDFRONT_DISTRIBUTION_ID</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">PATHS:</span> <span class="string">&#x27;/*&#x27;</span></span><br><span class="line">          <span class="attr">AWS_REGION:</span> <span class="string">&#x27;us-east-1&#x27;</span></span><br><span class="line">          <span class="attr">AWS_ACCESS_KEY_ID:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.AWS_ACCESS_KEY_ID</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">AWS_SECRET_ACCESS_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.AWS_SECRET_ACCESS_KEY</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>前端性能监控集成：</p>
+<figure class="highlight tsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// src/lib/sentry.ts</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">Sentry</span> <span class="keyword">from</span> <span class="string">&#x27;@sentry/react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">BrowserTracing</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@sentry/tracing&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">initSentry</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">PROD</span>) &#123;</span><br><span class="line">    <span class="title class_">Sentry</span>.<span class="title function_">init</span>(&#123;</span><br><span class="line">      <span class="attr">dsn</span>: <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">VITE_SENTRY_DSN</span>,</span><br><span class="line">      <span class="attr">integrations</span>: [<span class="keyword">new</span> <span class="title class_">BrowserTracing</span>()],</span><br><span class="line">      <span class="attr">tracesSampleRate</span>: <span class="number">0.2</span>,</span><br><span class="line">      <span class="attr">environment</span>: <span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">MODE</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在入口文件中初始化</span></span><br><span class="line"><span class="keyword">import</span> &#123; initSentry &#125; <span class="keyword">from</span> <span class="string">&#x27;./lib/sentry&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">initSentry</span>();</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目成果与经验总结"><a href="#项目成果与经验总结" class="headerlink" title="项目成果与经验总结"></a>项目成果与经验总结</h2><h3 id="性能指标改进"><a href="#性能指标改进" class="headerlink" title="性能指标改进"></a>性能指标改进</h3><p>重构后，我们的关键性能指标获得了显著改善：</p>
+<ul>
+<li><strong>首次内容绘制 (FCP)</strong>: 从2.8s降低到0.9s</li>
+<li><strong>最大内容绘制 (LCP)</strong>: 从4.2s降低到2.1s</li>
+<li><strong>首次输入延迟 (FID)</strong>: 从120ms降低到25ms</li>
+<li><strong>累积布局偏移 (CLS)</strong>: 从0.25降低到0.05</li>
+</ul>
+<h3 id="业务成果"><a href="#业务成果" class="headerlink" title="业务成果"></a>业务成果</h3><ul>
+<li>转化率提高了15%</li>
+<li>平均会话时长增加了20%</li>
+<li>移动端用户增长了25%</li>
+</ul>
+<h3 id="经验教训"><a href="#经验教训" class="headerlink" title="经验教训"></a>经验教训</h3><ol>
+<li><p><strong>渐进式重构</strong>：我们采用了页面级别的渐进式重构，而不是一次性重写整个应用，这减少了风险并允许我们更早地交付价值。</p>
+</li>
+<li><p><strong>性能预算</strong>：为每个页面设置明确的性能预算，并在CI&#x2F;CD流程中自动检查，确保性能不会随着功能迭代而下降。</p>
+</li>
+<li><p><strong>组件设计系统</strong>：在项目初期投入时间建立完善的组件设计系统，大大提高了后期的开发效率和UI一致性。</p>
+</li>
+<li><p><strong>数据获取策略</strong>：GraphQL为我们提供了精确获取所需数据的能力，减少了过度获取和数据转换的工作。</p>
+</li>
+<li><p><strong>自动化测试</strong>：高测试覆盖率帮助我们在重构过程中保持信心，减少了回归问题。</p>
+</li>
+</ol>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过这个项目，我们不仅成功地将一个传统的电子商务平台转变为现代化的React应用，还积累了宝贵的技术经验和最佳实践。React生态系统的强大和灵活性使我们能够构建高性能、可维护的大型前端应用，同时GraphQL的引入显著改善了前后端协作效率。</p>
+<p>未来，我们计划进一步优化应用性能，探索React Server Components和Streaming SSR等新技术，为用户提供更好的体验。</p>
+
+                    </div>
+                    <div id="load-more-container" class="text-center mt-8 mb-6">
+                        <button id="load-more-button" class="px-6 py-2 rounded-lg transition-all duration-300 ease-in-out font-medium" style="background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color);">
+                            
+                            <span id="load-more-text">阅读更多</span>
+                            <i class="fas fa-chevron-down ml-2"></i>
+                        </button>
+                    </div>
+                
+            </div>
+        </article>
+    </div>
+</div>
+
+<style>
+/* 添加一点过渡效果 */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    scroll-margin-top: calc(var(--nav-height) + 1rem);
+    transition: color 0.3s ease;
+}
+
+/* 优化文章内容宽度 */
+.prose {
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+/* 针对不同屏幕尺寸优化阅读体验 */
+@media (max-width: 768px) {
+    .prose {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+}
+
+/* 优化图片显示 */
+.prose img {
+    margin: 1.5rem auto;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Load More Button Styles */
+#load-more-button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    background-color: transparent !important;
+}
+
+#load-more-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--highlight-color) !important;
+    color: var(--highlight-color) !important;
+}
+
+#load-more-button:active {
+    transform: translateY(0);
+}
+
+#load-more-button::before {
+    display: none; /* 移除之前的背景效果 */
+}
+
+#load-more-button:hover i {
+    color: var(--highlight-color);
+}
+
+#article-preview {
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#article-preview.truncated {
+    position: relative;
+    overflow: hidden;
+}
+
+#article-preview.truncated::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom, 
+                              rgba(var(--card-bg-rgb, 255, 255, 255), 0), 
+                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.8) 70%, 
+                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.95) 90%);
+    pointer-events: none;
+}
+
+/* 添加深色模式下的渐变效果 */
+[data-theme="dark"] #article-preview.truncated::after {
+    background: linear-gradient(to bottom, 
+                              rgba(15, 23, 42, 0), 
+                              rgba(15, 23, 42, 0.8) 70%, 
+                              rgba(15, 23, 42, 0.95) 90%);
+}
+
+#load-more-container {
+    position: relative;
+    z-index: 5;
+    margin-top: -50px;
+    padding-top: 70px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get background color and convert to RGB for gradient
+    const computeRGBFromCardBgColor = () => {
+        // 检查当前主题
+        const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        // 根据主题使用不同的背景色
+        const cardBgColor = isDarkTheme ? 
+            '#0f172a' : // 深色模式背景色
+            (getComputedStyle(document.documentElement).getPropertyValue('--bg-color') || '#ffffff'); // 浅色模式背景色
+        
+        // Function to convert hex/rgb color to rgb values
+        const getRGBValues = (color) => {
+            // Create a temporary element
+            const temp = document.createElement('div');
+            temp.style.color = color;
+            temp.style.display = 'none';
+            document.body.appendChild(temp);
+            
+            // Get computed color
+            const computedColor = getComputedStyle(temp).color;
+            document.body.removeChild(temp);
+            
+            // Extract RGB values
+            const match = computedColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+            if (match) {
+                return `${match[1]}, ${match[2]}, ${match[3]}`;
+            }
+            
+            return isDarkTheme ? '15, 23, 42' : '255, 255, 255'; // 根据主题提供默认值
+        };
+        
+        // Set the RGB values as a CSS variable
+        const rgbValues = getRGBValues(cardBgColor);
+        document.documentElement.style.setProperty('--card-bg-rgb', rgbValues);
+    };
+    
+    // Compute RGB values
+    computeRGBFromCardBgColor();
+    
+    // 监听主题变化事件
+    document.addEventListener('themeChanged', function(event) {
+        // 重新计算背景颜色
+        computeRGBFromCardBgColor();
+    });
+    
+    const articlePreview = document.getElementById('article-preview');
+    const loadMoreButton = document.getElementById('load-more-button');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const loadMoreText = document.getElementById('load-more-text');
+    
+    if (articlePreview && loadMoreButton) {
+        const truncationPoint = document.getElementById('article-truncation-point');
+        
+        if (truncationPoint) {
+            // Get the position of the truncation point, with safety margin
+            const truncationPos = truncationPoint.offsetTop + 50;
+            
+            // Store original article height for animation
+            const fullHeight = articlePreview.scrollHeight;
+            
+            // Initially set the article as truncated with transition
+            articlePreview.style.transition = 'max-height 0.5s ease-in-out';
+            articlePreview.classList.add('truncated');
+            
+            // Set timeout to ensure transition works properly
+            setTimeout(() => {
+                articlePreview.style.maxHeight = truncationPos + 'px';
+            }, 10);
+            
+            // Check if content is primarily Chinese
+            const isChineseContent = (function() {
+                const content = articlePreview.textContent || '';
+                const sampleText = content.substring(0, 2000);
+                const chineseCount = (sampleText.match(/[\u4e00-\u9fa5]/g) || []).length;
+                return chineseCount > 150;
+            })();
+            
+            // Set button text based on language
+            const moreText = isChineseContent ? '阅读更多' : 'Load more';
+            const lessText = isChineseContent ? '收起内容' : 'Show less';
+            
+            // Handle load more button click
+            loadMoreButton.addEventListener('click', function() {
+                if (articlePreview.classList.contains('truncated')) {
+                    // Expand article
+                    articlePreview.classList.remove('truncated');
+                    articlePreview.style.maxHeight = fullHeight + 'px';
+                    
+                    // After animation completes, set to 'none' to handle any dynamic content changes
+                    setTimeout(() => {
+                        articlePreview.style.maxHeight = 'none';
+                    }, 500);
+                    
+                    // Update button
+                    loadMoreText.textContent = lessText;
+                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-down', 'fa-chevron-up');
+                } else {
+                    // Collapse article - first set a fixed height for animation
+                    articlePreview.style.maxHeight = articlePreview.scrollHeight + 'px';
+                    
+                    // Force reflow to ensure the browser registers the maxHeight change
+                    void articlePreview.offsetWidth;
+                    
+                    // Then add the truncated class and reduce height
+                    articlePreview.classList.add('truncated');
+                    articlePreview.style.maxHeight = truncationPos + 'px';
+                    
+                    // Update button
+                    loadMoreText.textContent = moreText;
+                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    
+                    // Scroll back to the top of the article
+                    window.scrollTo({
+                        top: articlePreview.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (articlePreview.classList.contains('truncated')) {
+                    // Update max height based on current truncation point position
+                    articlePreview.style.maxHeight = truncationPoint.offsetTop + 50 + 'px';
+                }
+            });
+        } else {
+            // No truncation point found - hide the button
+            loadMoreContainer.style.display = 'none';
+        }
+    }
+});
+</script> 
+    </div>
+
+    <!-- 赛博朋克风格展示板 -->
+    
+    <div class="neural-interface-section">
+        <div class="container mx-auto max-w-6xl px-4 md:px-6 mt-8">
+            <div class="cyberpunk-banner mb-6">
+            <!-- 故障线条 -->
+            <div class="glitch-line"></div>
+            <div class="glitch-line"></div>
+            <div class="glitch-line"></div>
+            <div class="glitch-line"></div>
+            <div class="glitch-line"></div>
+            
+            <div class="cyberpunk-content">
+                <div class="cyber-layout">
+                    <div class="cyber-main">
+                        <h1 class="text-2xl font-bold mb-1 glitch-text">SYSTEM.RICK_TSUI</h1>
+                            <p class="text-sm mb-2">// NEURAL.INTERFACE.CONNECTED</p>
+                        
+                        <div class="flex items-center mb-2">
+                            <span class="cyber-light light-red"></span>
+                            <span class="cyber-light light-blue"></span>
+                            <span class="cyber-light light-green"></span>
+                                <span class="ml-2 text-xs">SYSTEM.STATUS: ONLINE</span>
+                        </div>
+                        
+                            <div class="mb-2 text-xs" style="font-family: monospace;">
+                            > INITIALIZING NEURAL NETWORK v3.7...
+                        </div>
+                        
+                        <div class="flex flex-wrap mb-2">
+                            <span class="cyber-button text-xs py-1 px-3">NEURAL.NET</span>
+                            <span class="cyber-button text-xs py-1 px-3">QUANTUM.SYS</span>
+                            <span class="cyber-button text-xs py-1 px-3">AI.MODULE</span>
+                            <span class="cyber-button text-xs py-1 px-3">CYBER.SEC</span>
+                        </div>
+                        
+                            <div class="mt-2 text-xs">
+                                <div class="mb-1"><span style="font-weight: bold;">SYS.INFO:</span> Advanced Neural Interface // Quantum Processing</div>
+                                <div class="mb-1"><span style="font-weight: bold;">CORE.FOCUS:</span> AI Systems // Neural Networks // Human-Machine Interface</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cyber-main">
+                        <h1 class="text-2xl font-bold mb-1 glitch-text">TERMINAL.ACCESS</h1>
+                            <p class="text-sm mb-2">// SECURE.CHANNEL.ACTIVE</p>
+                        
+                        <div class="flex items-center mb-2">
+                            <span class="cyber-light light-green"></span>
+                                <span class="ml-2 text-xs">CONNECTION.SECURE</span>
+                        </div>
+                        
+                            <div class="mb-2 text-xs" style="font-family: monospace;">
+                            > SCANNING NETWORK PROTOCOLS...
+                        </div>
+                        
+                        <div class="flex flex-wrap mb-2">
+                            <span class="cyber-button text-xs py-1 px-3">DATA.STREAM</span>
+                            <span class="cyber-button text-xs py-1 px-3">SECURE.LINK</span>
+                            <span class="cyber-button text-xs py-1 px-3">CORE.ACCESS</span>
+                        </div>
+                        
+                            <div class="mt-2 text-xs terminal-info">
+                                <div class="mb-1"><span class="terminal-info-label">UPTIME:</span> 3752.16.42 // STABILITY NOMINAL</div>
+                                <div class="mb-1"><span class="terminal-info-label">SECURITY:</span> Quantum Encryption // Firewall Active<span class="terminal-cursor"></span></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 页脚 - 添加底部padding以避免内容被导航栏遮挡 -->
+    <footer class="py-6 pb-20 border-t mt-2" style="border-color: var(--border-color);">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            <!-- 神经接口终端风格的菜单 -->
+            <div class="cyberpunk-content mb-6 w-full max-w-3xl">
+                <div class="flex flex-wrap justify-center mb-4">
+                    <a href="/system" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Monitor <span class="hidden sm:inline text-xs ml-1">// SYS_OVERVIEW</span>
+                    </a>
+                    <a href="/corp" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Market <span class="hidden sm:inline text-xs ml-1">// CORP_LIAISON</span>
+                    </a>
+                    <a href="/protocol" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Protocol <span class="hidden sm:inline text-xs ml-1">// USER_PROTOCOL</span>
+                    </a>
+                    <a href="/privacy" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Firewall <span class="hidden sm:inline text-xs ml-1">// PRIVACY_POLICY</span>
+                    </a>
+                    <a href="/contact" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Fixer <span class="hidden sm:inline text-xs ml-1">// CONTACT_FIXER</span>
+                    </a>
+                    <a href="/map" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
+                        Matrix <span class="hidden sm:inline text-xs ml-1">// DATANET_MAP</span>
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center terminal-info">
+                    <div class="text-base font-bold mb-2">"Night City" Digital Consciousness Link Terminal</div>
+                    <div class="text-xs mb-1">Access Point: Cyber Space · Quantum Zone · Seventh Quadrant HEX#FF7700 Storage Block: NC-404</div>
+                    <div class="text-xs mb-1">Consciousness Hotline: XNET-7700-2077 Emergency Support: mclanyce#gmail.com</div>
+                </div>
+            </div>
+            
+            <p class="text-center text-sm text-secondary mb-1">
+                &copy; 2025 Rick's Blog. Powered by Hexo&Rick
+            </p>
+        </div>
+    </footer>
+
+    <!-- 底部悬浮导航栏 -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center items-center p-4" id="bottom-nav">
+        <div class="flex items-center gap-3 px-6 py-3 shadow-lg rounded-full backdrop-blur-md" style="background-color: var(--nav-bg); border: 1px solid var(--card-border);" data-theme-switch>
+            <a href="/" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="/archives" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon relative">
+                <i class="fas fa-archive"></i>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[7px] px-0.5 py-px rounded-full font-medium leading-none">New</span>
+            </a>
+            <a href="https://demo.719520.xyz" target="_blank" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon">
+                <i class="fas fa-globe"></i>
+            </a>
+            <button id="copy-wechat" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon bg-transparent border-0">
+                <i class="fab fa-weixin"></i>
+            </button>
+            
+            <div class="mx-1 h-5 w-px bg-gray-300 dark-mode-divider"></div>
+            
+            <button id="theme-toggle" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon theme-toggle bg-transparent border-0">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="reset-theme" title="重置主题，使用自动时间切换" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon bg-transparent border-0" style="display: none;">
+                <i class="fas fa-undo-alt"></i>
+            </button>
+            <button id="back-to-top" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon bg-transparent border-0">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 主題切換通知容器 - 預先創建 -->
+    <div id="theme-notification" class="fixed opacity-0 transition-opacity duration-300" style="bottom: 100px; right: 20px; padding: 8px 16px; border-radius: 4px; z-index: 9999; font-size: 14px; display: none;"></div>
+
+    <!-- 新文章浮窗通知 - 初始状态为隐藏，避免闪烁 -->
+    <div id="new-article-notification" class="fixed bottom-24 right-5 bg-card dark:bg-gray-800 rounded-lg shadow-lg p-4 max-w-sm transition-all duration-300 ease-in-out z-[100] border border-gray-200 dark:border-gray-700" style="display: none; opacity: 0; visibility: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.2); background-color: var(--bg-card); color: var(--text-color);">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center mr-3" style="background-color: var(--tech-bg);">
+                    <i class="fas fa-newspaper" style="color: var(--highlight-color);"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-semibold" style="color: var(--text-color);"></h3>
+                </div>
+            </div>
+            <button id="close-notification" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 ml-4">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+        </div>
+        <a href="/archives/" id="new-article-link" class="block mt-3 text-center py-2 rounded-md transition-colors" style="background-color: var(--highlight-color); color: white;">
+        </a>
+    </div>
+    
+    <!-- Custom JS -->
+    
+<script src="/js/script.js"></script>
+
+    
+<script src="/js/theme-switcher.js"></script>
+
+    
+<script src="/js/theme-overlay.js"></script>
+
+    <script>
+        // 通知系统
+        function showNotification(message, duration = 2000) {
+            var notification = document.createElement('div');
+            notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-sm z-[9999] transition-all duration-300';
+            notification.style.backgroundColor = 'var(--bg-card)';
+            notification.style.color = 'var(--text-color)';
+            notification.style.border = '1px solid var(--border-color)';
+            notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            notification.innerText = message;
+            
+            document.body.appendChild(notification);
+            
+            // 确保元素已添加到DOM后再添加opacity过渡效果
+            setTimeout(function() {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(function() {
+                notification.style.opacity = '0';
+                setTimeout(function() {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, duration);
+        }
+
+        // 命令行输入动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const commandTexts = [
+                '> SCANNING BLOG CONTENT...',
+                '> INDEXING ARTICLES...',
+                '> ANALYZING KEYWORDS...',
+                '> OPTIMIZING SEARCH ENGINE...',
+                '> CHECKING NEW POSTS...'
+            ];
+            
+            const commandElement = document.querySelector('.cyber-main:first-child .mb-2.text-xs[style*="monospace"]');
+            
+            if (commandElement) {
+                let currentIndex = 0;
+                
+                // 每5秒切换一次命令文本
+                setInterval(function() {
+                    currentIndex = (currentIndex + 1) % commandTexts.length;
+                    
+                    // 添加淡出效果
+                    commandElement.style.opacity = '0.3';
+                    
+                    setTimeout(function() {
+                        commandElement.innerHTML = commandTexts[currentIndex] + '<span class="terminal-cursor"></span>';
+                        commandElement.style.opacity = '1';
+                    }, 300);
+                    
+                }, 5000);
+            }
+        });
+
+        // 移除底部导航栏的显示/隐藏逻辑，使其始终可见
+        var bottomNav = document.getElementById('bottom-nav');
+        bottomNav.style.transform = 'translateY(0)'; // 确保导航栏始终可见
+        
+        // 返回顶部按钮功能
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 微信号复制功能
+        document.getElementById('copy-wechat').addEventListener('click', function() {
+            var wechatId = "378778778";
+            navigator.clipboard.writeText(wechatId).then(function() {
+                showNotification('微信号已复制: ' + wechatId);
+            }).catch(function(err) {
+                console.error('复制微信号失败: ', err);
+                // 兼容性处理
+                var textarea = document.createElement('textarea');
+                textarea.value = wechatId;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('微信号已复制: ' + wechatId);
+            });
+        });
+    </script>
+    
+    <!-- 新文章通知脚本 -->
+    <script src="/js/recent-articles-notification.js"></script>
+    <!-- 测试脚本 -->
+    <!-- <script src="/js/test-notification.js"></script> -->
+    
+    <!-- 终端故障效果脚本 -->
+    <script>
+        // 随机字符替换效果
+        function applyTextScramble() {
+            const terminalTexts = document.querySelectorAll('.terminal-info div');
+            
+            // 提高触发概率到10%
+            if (Math.random() > 0.9) {
+                // 随机选择一个终端文本元素
+                let targetElement = terminalTexts[Math.floor(Math.random() * terminalTexts.length)];
+                let originalText = targetElement.innerHTML;
+                
+                // 记录原始HTML以便恢复
+                if (!targetElement.dataset.originalHtml) {
+                    targetElement.dataset.originalHtml = originalText;
+                }
+                
+                // 应用随机故障效果类型
+                let glitchType = Math.floor(Math.random() * 5);
+                
+                switch (glitchType) {
+                    case 0: // 字符替换
+                        applyCharacterScramble(targetElement);
+                        break;
+                    case 1: // 重复字符
+                        applyRepeatEffect(targetElement);
+                        break;
+                    case 2: // 垂直错位
+                        applyVerticalShift(targetElement);
+                        break;
+                    case 3: // 颜色故障
+                        applyColorGlitch(targetElement);
+                        break;
+                    case 4: // 闪烁效果
+                        applyBlinkEffect(targetElement);
+                        break;
+                }
+                
+                // 50-300ms后恢复原文本
+                setTimeout(() => {
+                    targetElement.innerHTML = targetElement.dataset.originalHtml || originalText;
+                    targetElement.style = "";
+                }, 50 + Math.random() * 250);
+            }
+        }
+        
+        // 字符替换效果
+        function applyCharacterScramble(element) {
+            let text = element.innerText;
+            let textArray = text.split('');
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-[]{}|;:,.<>?/";
+            
+            // 替换2-5个随机字符
+            let count = 2 + Math.floor(Math.random() * 4);
+            
+            for (let i = 0; i < count; i++) {
+                let randomIndex = Math.floor(Math.random() * text.length);
+                let randomChar = chars[Math.floor(Math.random() * chars.length)];
+                textArray[randomIndex] = randomChar;
+            }
+            
+            element.innerText = textArray.join('');
+        }
+        
+        // 重复字符效果
+        function applyRepeatEffect(element) {
+            let text = element.innerText;
+            let position = Math.floor(Math.random() * (text.length - 3));
+            let charToRepeat = text.charAt(position);
+            let repeatCount = 2 + Math.floor(Math.random() * 4);
+            let repeatedChars = charToRepeat.repeat(repeatCount);
+            
+            let result = text.substring(0, position) + repeatedChars + text.substring(position + 1);
+            element.innerText = result;
+        }
+        
+        // 垂直错位效果
+        function applyVerticalShift(element) {
+            element.style.transform = `translateY(${(Math.random() < 0.5 ? -1 : 1) * (2 + Math.random() * 3)}px)`;
+            element.style.display = "inline-block";
+            element.style.transition = "none";
+        }
+        
+        // 颜色故障效果
+        function applyColorGlitch(element) {
+            let colors = ["#ff0000", "#00ff00", "#0000ff", "#ff00ff", "#ffff00", "#00ffff"];
+            let randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // 使用text-shadow模拟颜色分离效果
+            element.style.color = randomColor;
+            element.style.textShadow = `
+                ${(Math.random() < 0.5 ? -1 : 1) * Math.random()}px 0 rgba(255,0,0,0.7),
+                ${(Math.random() < 0.5 ? -1 : 1) * Math.random()}px 0 rgba(0,255,0,0.7),
+                ${(Math.random() < 0.5 ? -1 : 1) * Math.random()}px 0 rgba(0,0,255,0.7)
+            `;
+        }
+        
+        // 闪烁效果
+        function applyBlinkEffect(element) {
+            element.style.animation = "none";
+            element.style.opacity = Math.random() < 0.5 ? "0.3" : "0.7";
+        }
+        
+        // 每80ms尝试一次替换效果，提高频率
+        setInterval(applyTextScramble, 80);
+    </script>
+    
+
+</body>
+</html> 
