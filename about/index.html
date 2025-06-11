@@ -951,7 +951,8 @@
 
     <!-- 主内容区域 -->
     <div class="flex-grow container mx-auto px-4 md:px-8">
-        <!-- 初始主题检测 - 必须放在最前面 -->
+        <!-- 引入about页面的内容 -->
+<!-- 初始主题检测 - 必须放在最前面 -->
 <script>
     (function() {
         // 检查本地存储中的主题设置
@@ -1386,56 +1387,17 @@
   </div>
 </div>
 
-<!-- 页脚 - 添加底部padding以避免内容被导航栏遮挡 -->
-<footer class="py-6 pb-20 border-t mt-2" style="border-color: var(--border-color);">
-    <div class="container mx-auto px-4 flex flex-col items-center">
-        <!-- 神经接口终端风格的菜单 -->
-        <div class="cyberpunk-content mb-6 w-full max-w-3xl">
-            <div class="flex flex-wrap justify-center mb-4">
-                <a href="/system" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Monitor <span class="hidden sm:inline text-xs ml-1">// SYS_OVERVIEW</span>
-                </a>
-                <a href="/corp" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Market <span class="hidden sm:inline text-xs ml-1">// CORP_LIAISON</span>
-                </a>
-                <a href="/protocol" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Protocol <span class="hidden sm:inline text-xs ml-1">// USER_PROTOCOL</span>
-                </a>
-                <a href="/privacy" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Firewall <span class="hidden sm:inline text-xs ml-1">// PRIVACY_POLICY</span>
-                </a>
-                <a href="/contact" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Fixer <span class="hidden sm:inline text-xs ml-1">// CONTACT_FIXER</span>
-                </a>
-                <a href="/map" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
-                    Matrix <span class="hidden sm:inline text-xs ml-1">// DATANET_MAP</span>
-                </a>
-            </div>
-            
-            <div class="mt-6 text-center terminal-info">
-                <div class="text-base font-bold mb-2">"Night City" Digital Consciousness Link Terminal</div>
-                <div class="text-xs mb-1">Access Point: Cyber Space · Quantum Zone · Seventh Quadrant HEX#FF7700 Storage Block: NC-404</div>
-                <div class="text-xs mb-1">Consciousness Hotline: XNET-7700-2077 Emergency Support: mclanyce#gmail.com</div>
-            </div>
-        </div>
-        
-        <p class="text-center text-sm text-secondary mb-1">
-            &copy; 2025 Rick's Blog. Powered by Hexo&Rick
-        </p>
-    </div>
-</footer>
-
-<!-- 底部悬浮导航栏已通过继承layout.ejs自动添加 -->
+<!-- 底部悬浮导航栏已通过继承layout.ejs自动添加 --> 
     </div>
 
     <!-- 赛博朋克风格展示板 -->
     
 
     <!-- 页脚 - 添加底部padding以避免内容被导航栏遮挡 -->
-    <footer class="py-6 pb-20 border-t mt-2" style="border-color: var(--border-color);">
+    <footer class="py-6 pb-20 mt-2">
         <div class="container mx-auto px-4 flex flex-col items-center">
             <!-- 神经接口终端风格的菜单 -->
-            <div class="cyberpunk-content mb-6 w-full max-w-3xl">
+            <div class="mb-6 w-full max-w-3xl" style="background-color: transparent; border: none;">
                 <div class="flex flex-wrap justify-center mb-4">
                     <a href="/system" class="cyber-button text-center py-1 px-2 text-xs sm:text-sm mx-1 my-1">
                         Monitor <span class="hidden sm:inline text-xs ml-1">// SYS_OVERVIEW</span>
