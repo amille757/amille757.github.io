@@ -83,7 +83,7 @@
 <link rel="icon" href="/favicon.ico"> 
 <!-- Theme meta tag -->
 <meta name="color-scheme" content="light dark">
-<title>Rick&#39;s Blog | Exploring the Realities of AI Development - 我的技术栈</title>
+<title>Rick&#39;s Blog | Exploring the Realities of AI Development - About Me</title>
 <!-- Theme Style -->
 
 <link rel="stylesheet" href="/css/style.css">
@@ -951,275 +951,391 @@
 
     <!-- 主内容区域 -->
     <div class="flex-grow container mx-auto px-4 md:px-8">
-        <!-- 文章头部 -->
-<div class="max-w-5xl mx-auto mb-10" style="margin-top: 20px;">
-    <!-- 文章标题 -->
-    <h1 class="text-3xl md:text-4xl font-bold mb-3" style="color: var(--text-primary);">我的技术栈</h1>
-    
-    <!-- 文章元数据 -->
-    <div class="flex flex-wrap items-center text-sm mb-8 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--card-border);">
-        <div class="mr-6 mb-2">
-            <i class="far fa-calendar-alt mr-1"></i>
-            <span>Jun 2025</span>
-        </div>
-        
-        
-        <div class="mr-6 mb-2">
-            <i class="far fa-calendar-check mr-1"></i>
-            <span>Updated Jun 2025</span>
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-<!-- 文章内容 -->
-<div class="max-w-4xl mx-auto relative post-page">
-    <!-- Main Content -->
-    <div class="w-full">
-        <article>
-            <!-- Content -->
-            
-            
-            <div class="prose max-w-none mx-auto">
-                
-                    
-                
-            </div>
-        </article>
-    </div>
-</div>
-
-<style>
-/* 添加一点过渡效果 */
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    scroll-margin-top: calc(var(--nav-height) + 1rem);
-    transition: color 0.3s ease;
-}
-
-/* 优化文章内容宽度 */
-.prose {
-    font-size: 1.05rem;
-    line-height: 1.75;
-}
-
-/* 针对不同屏幕尺寸优化阅读体验 */
-@media (max-width: 768px) {
-    .prose {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-}
-
-/* 优化图片显示 */
-.prose img {
-    margin: 1.5rem auto;
-    border-radius: 0.375rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Load More Button Styles */
-#load-more-button {
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    background-color: transparent !important;
-}
-
-#load-more-button:hover {
-    transform: translateY(-2px);
-    border-color: var(--highlight-color) !important;
-    color: var(--highlight-color) !important;
-}
-
-#load-more-button:active {
-    transform: translateY(0);
-}
-
-#load-more-button::before {
-    display: none; /* 移除之前的背景效果 */
-}
-
-#load-more-button:hover i {
-    color: var(--highlight-color);
-}
-
-#article-preview {
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#article-preview.truncated {
-    position: relative;
-    overflow: hidden;
-}
-
-#article-preview.truncated::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background: linear-gradient(to bottom, 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0), 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.8) 70%, 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.95) 90%);
-    pointer-events: none;
-}
-
-/* 添加深色模式下的渐变效果 */
-[data-theme="dark"] #article-preview.truncated::after {
-    background: linear-gradient(to bottom, 
-                              rgba(15, 23, 42, 0), 
-                              rgba(15, 23, 42, 0.8) 70%, 
-                              rgba(15, 23, 42, 0.95) 90%);
-}
-
-#load-more-container {
-    position: relative;
-    z-index: 5;
-    margin-top: -50px;
-    padding-top: 70px;
-}
-</style>
-
+        <!-- 初始主题检测 - 必须放在最前面 -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get background color and convert to RGB for gradient
-    const computeRGBFromCardBgColor = () => {
-        // 检查当前主题
-        const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
+    (function() {
+        // 检查本地存储中的主题设置
+        const savedTheme = localStorage.getItem('theme');
+        const userSetTheme = localStorage.getItem('user-set-theme');
         
-        // 根据主题使用不同的背景色
-        const cardBgColor = isDarkTheme ? 
-            '#0f172a' : // 深色模式背景色
-            (getComputedStyle(document.documentElement).getPropertyValue('--bg-color') || '#ffffff'); // 浅色模式背景色
-        
-        // Function to convert hex/rgb color to rgb values
-        const getRGBValues = (color) => {
-            // Create a temporary element
-            const temp = document.createElement('div');
-            temp.style.color = color;
-            temp.style.display = 'none';
-            document.body.appendChild(temp);
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else {
+            // 获取当前UTC时间
+            const now = new Date();
+            // 转换为北京时间 (UTC+8)
+            const beijingHours = (now.getUTCHours() + 8) % 24;
+            // 定义白天时段 (6:00-18:00)
+            const isDaytime = beijingHours >= 6 && beijingHours < 18;
+            // 根据北京时间设置初始主题
+            document.documentElement.setAttribute('data-theme', isDaytime ? 'light' : 'dark');
+        }
+    })();
+</script>
+
+<!-- 修复浏览器后退模糊问题 -->
+<script>
+    // 专门处理浏览器后退时可能出现的模糊效果问题
+    window.addEventListener('pageshow', function(event) {
+        // 检测是否从缓存加载（浏览器后退）
+        if (event.persisted) {
+            console.log('Page loaded from cache (back navigation)');
             
-            // Get computed color
-            const computedColor = getComputedStyle(temp).color;
-            document.body.removeChild(temp);
-            
-            // Extract RGB values
-            const match = computedColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-            if (match) {
-                return `${match[1]}, ${match[2]}, ${match[3]}`;
+            // 立即清除任何可能的模糊效果
+            const overlay = document.getElementById('page-transition-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.backdropFilter = 'none';
+                overlay.style.WebkitBackdropFilter = 'none';
+                overlay.style.pointerEvents = 'none';
             }
             
-            return isDarkTheme ? '15, 23, 42' : '255, 255, 255'; // 根据主题提供默认值
-        };
-        
-        // Set the RGB values as a CSS variable
-        const rgbValues = getRGBValues(cardBgColor);
-        document.documentElement.style.setProperty('--card-bg-rgb', rgbValues);
-    };
-    
-    // Compute RGB values
-    computeRGBFromCardBgColor();
-    
-    // 监听主题变化事件
-    document.addEventListener('themeChanged', function(event) {
-        // 重新计算背景颜色
-        computeRGBFromCardBgColor();
+            // 确保body和其他元素也没有模糊效果
+            document.body.style.filter = 'none';
+            document.body.style.backdropFilter = 'none';
+            document.body.style.webkitBackdropFilter = 'none';
+            
+            // 搜索并清除所有可能使用模糊效果的元素
+            document.querySelectorAll('[style*="blur"], [style*="backdrop-filter"]').forEach(el => {
+                if (el.id !== 'theme-notification' && el.id !== 'new-article-notification') {
+                    el.style.filter = '';
+                    el.style.backdropFilter = '';
+                    el.style.webkitBackdropFilter = '';
+                }
+            });
+        }
     });
     
-    const articlePreview = document.getElementById('article-preview');
-    const loadMoreButton = document.getElementById('load-more-button');
-    const loadMoreContainer = document.getElementById('load-more-container');
-    const loadMoreText = document.getElementById('load-more-text');
-    
-    if (articlePreview && loadMoreButton) {
-        const truncationPoint = document.getElementById('article-truncation-point');
+    // 使用history API监听导航事件
+    window.addEventListener('popstate', function() {
+        console.log('Navigation: browser back/forward button used');
         
-        if (truncationPoint) {
-            // Get the position of the truncation point, with safety margin
-            const truncationPos = truncationPoint.offsetTop + 50;
-            
-            // Store original article height for animation
-            const fullHeight = articlePreview.scrollHeight;
-            
-            // Initially set the article as truncated with transition
-            articlePreview.style.transition = 'max-height 0.5s ease-in-out';
-            articlePreview.classList.add('truncated');
-            
-            // Set timeout to ensure transition works properly
-            setTimeout(() => {
-                articlePreview.style.maxHeight = truncationPos + 'px';
-            }, 10);
-            
-            // Check if content is primarily Chinese
-            const isChineseContent = (function() {
-                const content = articlePreview.textContent || '';
-                const sampleText = content.substring(0, 2000);
-                const chineseCount = (sampleText.match(/[\u4e00-\u9fa5]/g) || []).length;
-                return chineseCount > 150;
-            })();
-            
-            // Set button text based on language
-            const moreText = isChineseContent ? '阅读更多' : 'Load more';
-            const lessText = isChineseContent ? '收起内容' : 'Show less';
-            
-            // Handle load more button click
-            loadMoreButton.addEventListener('click', function() {
-                if (articlePreview.classList.contains('truncated')) {
-                    // Expand article
-                    articlePreview.classList.remove('truncated');
-                    articlePreview.style.maxHeight = fullHeight + 'px';
-                    
-                    // After animation completes, set to 'none' to handle any dynamic content changes
-                    setTimeout(() => {
-                        articlePreview.style.maxHeight = 'none';
-                    }, 500);
-                    
-                    // Update button
-                    loadMoreText.textContent = lessText;
-                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-down', 'fa-chevron-up');
-                } else {
-                    // Collapse article - first set a fixed height for animation
-                    articlePreview.style.maxHeight = articlePreview.scrollHeight + 'px';
-                    
-                    // Force reflow to ensure the browser registers the maxHeight change
-                    void articlePreview.offsetWidth;
-                    
-                    // Then add the truncated class and reduce height
-                    articlePreview.classList.add('truncated');
-                    articlePreview.style.maxHeight = truncationPos + 'px';
-                    
-                    // Update button
-                    loadMoreText.textContent = moreText;
-                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
-                    
-                    // Scroll back to the top of the article
-                    window.scrollTo({
-                        top: articlePreview.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-            
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                if (articlePreview.classList.contains('truncated')) {
-                    // Update max height based on current truncation point position
-                    articlePreview.style.maxHeight = truncationPoint.offsetTop + 50 + 'px';
-                }
-            });
-        } else {
-            // No truncation point found - hide the button
-            loadMoreContainer.style.display = 'none';
+        // 清除任何可能的模糊效果
+        const overlay = document.getElementById('page-transition-overlay');
+        if (overlay) {
+            overlay.style.opacity = '0';
+            overlay.style.backdropFilter = 'none';
+            overlay.style.WebkitBackdropFilter = 'none';
+            overlay.style.pointerEvents = 'none';
         }
+    });
+</script>
+
+<meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="A blog documenting the real-world challenges and humorous mishaps encountered during the development of TaskWeaver, offering insights into AI agent planning, prompt engineering, and collaborative development.">
+<meta name="keywords" content="AI Agents, Task Planning, Prompt Engineering, LLM Integration, Debugging, Development Stories, OpenAI API, Secrets Management, Intern Mistakes, Engineering Culture">
+<meta name="author" content="RICK TSUI">
+<meta name="generator" content="Hexo">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico"> 
+<!-- Theme meta tag -->
+<meta name="color-scheme" content="light dark">
+<title>Rick&#39;s Blog | Exploring the Realities of AI Development - About Me</title>
+<!-- Theme Style -->
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<link rel="stylesheet" href="/css/mobile-fix.css">
+
+<!-- Logo CSS removed as we're now using text instead of images -->
+
+<!-- Open Graph 协议 -->
+<meta property="og:title" content="Rick&#39;s Blog">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://example.com">
+<meta property="og:description" content="A blog documenting the real-world challenges and humorous mishaps encountered during the development of TaskWeaver, offering insights into AI agent planning, prompt engineering, and collaborative development."> 
+
+<style>
+  /* 关于我页面样式 */
+  .about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: var(--font-family);
+    line-height: 1.8;
+  }
+  
+  /* 页面标题 */
+  .about-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+  
+  .about-subtitle {
+    font-size: 1.1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    font-weight: 400;
+  }
+  
+  /* 分隔符 */
+  .divider {
+    width: 80px;
+    height: 4px;
+    background: var(--highlight-color);
+    margin: 2rem auto;
+  }
+  
+  /* 关于我主要内容 */
+  .about-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  /* 每个段落/部分 */
+  .about-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .section-title i {
+    color: var(--highlight-color);
+    font-size: 1.3rem;
+  }
+  
+  .section-content {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    text-align: justify;
+  }
+  
+  /* 两列布局 */
+  .two-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  /* 技能卡片 */
+  .skill-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .skill-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(var(--highlight-color-rgb), 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .skill-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .skill-title i {
+    color: var(--highlight-color);
+  }
+  
+  .skill-list {
+    padding-left: 1rem;
+  }
+  
+  .skill-item {
+    margin-bottom: 0.5rem;
+    position: relative;
+    color: var(--text-secondary);
+  }
+  
+  .skill-item::before {
+    content: "•";
+    color: var(--highlight-color);
+    font-weight: bold;
+    position: absolute;
+    left: -1rem;
+  }
+  
+  /* 兴趣爱好 */
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .interest-tag {
+    padding: 0.5rem 1rem;
+    background-color: rgba(var(--highlight-color-rgb), 0.05);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .interest-tag i {
+    color: var(--highlight-color);
+    font-size: 0.9rem;
+  }
+  
+  /* 联系方式 */
+  .contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .contact-item:hover {
+    color: var(--highlight-color);
+  }
+  
+  .contact-item i {
+    font-size: 1.2rem;
+  }
+  
+  /* 响应式布局 */
+  @media (min-width: 768px) {
+    .two-columns {
+      grid-template-columns: 1fr 1fr;
     }
-});
-</script> 
+    
+    .about-title {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+
+<div class="about-container">
+  <!-- 页面标题 -->
+  <h1 class="about-title">About Me</h1>
+  <p class="about-subtitle">Passionate about technology, enjoying creation, constantly learning</p>
+  
+  <div class="divider"></div>
+  
+  <!-- 主要内容 -->
+  <div class="about-main">
+    <!-- 个人简介 -->
+    <section class="about-section">
+      <h2 class="section-title"><i class="fas fa-user"></i> Personal Introduction</h2>
+      <div class="section-content">
+        <p>Hello! I'm a full-stack developer focused on creating elegant, efficient, and user-friendly digital products. With 5 years of industry experience, I'm passionate about transforming complex problems into simple, intuitive solutions.</p>
+        <p>I believe that the power of technology lies not only in its complexity but in how it simplifies our lives and solves real problems. Throughout my career, I've pursued code elegance and system maintainability while continuously expanding my technical breadth.</p>
+      </div>
+    </section>
+    
+    <!-- 专业技能 -->
+    <section class="about-section">
+      <h2 class="section-title"><i class="fas fa-code"></i> Professional Skills</h2>
+      <div class="skill-cards">
+        <div class="skill-card">
+          <h3 class="skill-title"><i class="fas fa-laptop-code"></i>Frontend Technologies</h3>
+          <ul class="skill-list">
+            <li class="skill-item">React/Vue.js Component Development</li>
+            <li class="skill-item">Modern JavaScript (ES6+)</li>
+            <li class="skill-item">Responsive & Mobile-First Design</li>
+            <li class="skill-item">Performance Optimization & Best Practices</li>
+            <li class="skill-item">CSS Preprocessors (Sass, Less)</li>
+          </ul>
+        </div>
+        
+        <div class="skill-card">
+          <h3 class="skill-title"><i class="fas fa-server"></i>Backend Technologies</h3>
+          <ul class="skill-list">
+            <li class="skill-item">Node.js/Express Application Development</li>
+            <li class="skill-item">RESTful API Design & Implementation</li>
+            <li class="skill-item">Database Design & Optimization</li>
+            <li class="skill-item">Authentication & Authorization Systems</li>
+            <li class="skill-item">Microservice Architecture</li>
+          </ul>
+        </div>
+        
+        <div class="skill-card">
+          <h3 class="skill-title"><i class="fas fa-brain"></i>Artificial Intelligence</h3>
+          <ul class="skill-list">
+            <li class="skill-item">Natural Language Processing (NLP)</li>
+            <li class="skill-item">Language Model Integration & Application</li>
+            <li class="skill-item">Intelligent Conversation System Development</li>
+            <li class="skill-item">AI-assisted Content Creation</li>
+            <li class="skill-item">Data Analysis & Visualization</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 关于博客 -->
+    <section class="about-section">
+      <h2 class="section-title"><i class="fas fa-feather-alt"></i> About This Blog</h2>
+      <div class="section-content">
+        <p>This blog is where I share my learning insights, technical perspectives, and project experiences. Here, I document my technical exploration journey, share my successes and failures, and the lessons learned along the way.</p>
+        <p>Through writing, I hope to organize my thoughts, deepen my understanding of technology, and provide valuable references and assistance to other developers. If you have any questions or ideas, feel free to connect with me!</p>
+      </div>
+    </section>
+    
+    <!-- 兴趣爱好 -->
+    <section class="about-section">
+      <h2 class="section-title"><i class="fas fa-heart"></i> Interests & Hobbies</h2>
+      <div class="section-content">
+        <p>Beyond programming, I'm passionate about the following activities, which not only provide me with space for relaxation and creativity but also bring new inspiration and perspectives to my technical work.</p>
+        
+        <div class="interests">
+          <span class="interest-tag"><i class="fas fa-book"></i> Reading</span>
+          <span class="interest-tag"><i class="fas fa-music"></i> Music</span>
+          <span class="interest-tag"><i class="fas fa-camera"></i> Photography</span>
+          <span class="interest-tag"><i class="fas fa-hiking"></i> Hiking</span>
+          <span class="interest-tag"><i class="fas fa-chess"></i> Chess</span>
+          <span class="interest-tag"><i class="fas fa-utensils"></i> Cooking</span>
+          <span class="interest-tag"><i class="fas fa-paint-brush"></i> Painting</span>
+          <span class="interest-tag"><i class="fas fa-globe-asia"></i> Travel</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 联系方式 -->
+    <section class="about-section">
+      <h2 class="section-title"><i class="fas fa-envelope"></i> Contact Me</h2>
+      <div class="section-content">
+        <p>If you're interested in my work, or have any questions or collaboration opportunities, feel free to reach out to me through the following channels:</p>
+        
+        <div class="contact-list">
+          <a href="mailto:mclanyce@gmail.com" class="contact-item">
+            <i class="fas fa-envelope"></i> mclanyce#gmail.com
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div> 
     </div>
 
     <!-- 赛博朋克风格展示板 -->
