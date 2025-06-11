@@ -23,6 +23,54 @@
     })();
 </script>
 
+<!-- 修复浏览器后退模糊问题 -->
+<script>
+    // 专门处理浏览器后退时可能出现的模糊效果问题
+    window.addEventListener('pageshow', function(event) {
+        // 检测是否从缓存加载（浏览器后退）
+        if (event.persisted) {
+            console.log('Page loaded from cache (back navigation)');
+            
+            // 立即清除任何可能的模糊效果
+            const overlay = document.getElementById('page-transition-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.backdropFilter = 'none';
+                overlay.style.WebkitBackdropFilter = 'none';
+                overlay.style.pointerEvents = 'none';
+            }
+            
+            // 确保body和其他元素也没有模糊效果
+            document.body.style.filter = 'none';
+            document.body.style.backdropFilter = 'none';
+            document.body.style.webkitBackdropFilter = 'none';
+            
+            // 搜索并清除所有可能使用模糊效果的元素
+            document.querySelectorAll('[style*="blur"], [style*="backdrop-filter"]').forEach(el => {
+                if (el.id !== 'theme-notification' && el.id !== 'new-article-notification') {
+                    el.style.filter = '';
+                    el.style.backdropFilter = '';
+                    el.style.webkitBackdropFilter = '';
+                }
+            });
+        }
+    });
+    
+    // 使用history API监听导航事件
+    window.addEventListener('popstate', function() {
+        console.log('Navigation: browser back/forward button used');
+        
+        // 清除任何可能的模糊效果
+        const overlay = document.getElementById('page-transition-overlay');
+        if (overlay) {
+            overlay.style.opacity = '0';
+            overlay.style.backdropFilter = 'none';
+            overlay.style.WebkitBackdropFilter = 'none';
+            overlay.style.pointerEvents = 'none';
+        }
+    });
+</script>
+
 <meta charset="utf-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -891,6 +939,7 @@
             background-color: #CCCCCC;
         }
     </style>
+<link rel="alternate" href="/atom.xml" title="Rick's Blog" type="application/atom+xml">
 </head>
 <body class="min-h-screen flex flex-col overflow-x-hidden">
     <!-- Page transition overlay -->
@@ -1539,13 +1588,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-blue">
-                            <i class="fas fa-network-wired"></i>
+                            <i class="fas fa-chart-line"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-network-wired' style="font-size: 16px;"></i>
+                                    <i class='fas fa-chart-line' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 10, 2025</span>
                             </div>
@@ -1580,13 +1629,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-red">
-                            <i class="fas fa-pen"></i>
+                            <i class="fas fa-brain"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-pen' style="font-size: 16px;"></i>
+                                    <i class='fas fa-brain' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 08, 2025</span>
                             </div>
@@ -1621,13 +1670,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-azure">
-                            <i class="fas fa-terminal"></i>
+                            <i class="fas fa-database"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-terminal' style="font-size: 16px;"></i>
+                                    <i class='fas fa-database' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Apr 25, 2025</span>
                             </div>
@@ -1660,13 +1709,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-green">
-                            <i class="fas fa-newspaper"></i>
+                            <i class="fas fa-brain"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-newspaper' style="font-size: 16px;"></i>
+                                    <i class='fas fa-brain' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Apr 12, 2025</span>
                             </div>
@@ -1699,13 +1748,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-indigo">
-                            <i class="fas fa-network-wired"></i>
+                            <i class="fas fa-pen"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-network-wired' style="font-size: 16px;"></i>
+                                    <i class='fas fa-pen' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Mar 30, 2025</span>
                             </div>
@@ -1740,13 +1789,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-pink">
-                            <i class="fas fa-server"></i>
+                            <i class="fas fa-book"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-server' style="font-size: 16px;"></i>
+                                    <i class='fas fa-book' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Mar 28, 2025</span>
                             </div>
@@ -1781,13 +1830,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-amber">
-                            <i class="fas fa-lightbulb"></i>
+                            <i class="fas fa-code"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-lightbulb' style="font-size: 16px;"></i>
+                                    <i class='fas fa-code' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Mar 15, 2025</span>
                             </div>
@@ -1946,6 +1995,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="/archives" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon relative">
                 <i class="fas fa-archive"></i>
                 <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[7px] px-0.5 py-px rounded-full font-medium leading-none">New</span>
+            </a>
+            <a href="/tech-stack" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon">
+                <i class="fas fa-layer-group"></i>
             </a>
             <a href="https://demo.719520.xyz" target="_blank" class="w-9 h-9 rounded-full flex items-center justify-center text-gray-800 dark-mode-icon">
                 <i class="fas fa-globe"></i>

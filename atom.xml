@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Rick&#39;s Blog</title>
+  <icon>http://example.com/images/favicon.png</icon>
+  <subtitle>Exploring the Realities of AI Development</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2025-06-04T15:45:02.316Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>RICK TSUI</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Navigating Complexity in Large-Scale React Projects: Strategies for Success</title>
+    <link href="http://example.com/2025/06/04/complex-react-project/"/>
+    <id>http://example.com/2025/06/04/complex-react-project/</id>
+    <published>2025-06-04T06:30:00.000Z</published>
+    <updated>2025-06-04T15:45:02.316Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;As React applications grow in size and complexity, developers face numerous challenges that can impact both the development experience</summary>
+        
+      
+    
+    
+    
+    <category term="React" scheme="http://example.com/categories/React/"/>
+    
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+    <category term="JavaScript" scheme="http://example.com/tags/JavaScript/"/>
+    
+    <category term="Frontend Development" scheme="http://example.com/tags/Frontend-Development/"/>
+    
+    <category term="Architecture" scheme="http://example.com/tags/Architecture/"/>
+    
+    <category term="State Management" scheme="http://example.com/tags/State-Management/"/>
+    
+    <category term="Performance Optimization" scheme="http://example.com/tags/Performance-Optimization/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网站主题与图片加载逻辑的优化实现</title>
+    <link href="http://example.com/2025/06/01/%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%80%BB%E8%BE%91%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://example.com/2025/06/01/%E4%B8%BB%E9%A2%98%E4%B8%8E%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%80%BB%E8%BE%91%E7%9A%84%E4%BC%98%E5%8C%96%E5%AE%9E%E7%8E%B0/</id>
+    <published>2025-06-01T02:00:00.000Z</published>
+    <updated>2025-06-01T16:06:33.019Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术分享" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="JavaScript" scheme="http://example.com/tags/JavaScript/"/>
+    
+    <category term="Hexo" scheme="http://example.com/tags/Hexo/"/>
+    
+    <category term="前端开发" scheme="http://example.com/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+    <category term="主题设计" scheme="http://example.com/tags/%E4%B8%BB%E9%A2%98%E8%AE%BE%E8%AE%A1/"/>
+    
+    <category term="用户体验" scheme="http://example.com/tags/%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>构建高性能电子商务平台：React与GraphQL的实战应用</title>
+    <link href="http://example.com/2025/05/27/react/"/>
+    <id>http://example.com/2025/05/27/react/</id>
+    <published>2025-05-27T06:18:46.000Z</published>
+    <updated>2025-05-28T07:11:06.943Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;项目背景&quot;&gt;&lt;a href=&quot;#项目背景&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="React" scheme="http://example.com/categories/React/"/>
+    
+    
+    <category term="GraphQL" scheme="http://example.com/tags/GraphQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>虚拟机安全环境搭建指南：网络安全学习与渗透测试实践</title>
+    <link href="http://example.com/2025/05/22/vm-security-testing/"/>
+    <id>http://example.com/2025/05/22/vm-security-testing/</id>
+    <published>2025-05-22T08:15:45.000Z</published>
+    <updated>2025-05-23T04:45:03.811Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在&lt;a href=&quot;/2025/05/22/vm-installation-guide/&quot;&gt;第一篇文章&lt;/a&gt;中，我们学习了虚拟机的基础安装与配置，&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="技术分享" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="技术教程" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="虚拟化" scheme="http://example.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+    <category term="网络安全" scheme="http://example.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    <category term="渗透测试" scheme="http://example.com/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+    <category term="Kali Linux" scheme="http://example.com/tags/Kali-Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>虚拟机开发环境搭建指南：打造高效编程工作空间</title>
+    <link href="http://example.com/2025/05/21/vm-development-environments/"/>
+    <id>http://example.com/2025/05/21/vm-development-environments/</id>
+    <published>2025-05-21T06:45:30.000Z</published>
+    <updated>2025-05-23T04:36:49.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="技术分享" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="技术教程" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="虚拟化" scheme="http://example.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+    <category term="开发环境" scheme="http://example.com/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+    
+    <category term="编程" scheme="http://example.com/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>零基础虚拟机安装指南：从下载到使用的完整教程</title>
+    <link href="http://example.com/2025/05/19/vm-installation-guide/"/>
+    <id>http://example.com/2025/05/19/vm-installation-guide/</id>
+    <published>2025-05-19T02:30:15.000Z</published>
+    <updated>2025-05-23T19:31:24.543Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;虚拟机是一种可以在你现有操作系统上运行另一个操作系统的软件。它的主要优势包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;隔离环境&lt;/strong&gt;：可以在不影响主系统的情况下测试软件&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;多系统并存&lt;/strong&gt;：在Windows上运行L</summary>
+        
+      
+    
+    
+    
+    <category term="技术分享" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="技术教程" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/"/>
+    
+    <category term="虚拟化" scheme="http://example.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
+    
+    <category term="VMware" scheme="http://example.com/tags/VMware/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS 17巨魔工具（TrollStore）完整安装使用指南</title>
+    <link href="http://example.com/2025/05/15/ios17-trollstore-guide/"/>
+    <id>http://example.com/2025/05/15/ios17-trollstore-guide/</id>
+    <published>2025-05-15T02:30:00.000Z</published>
+    <updated>2025-05-23T04:37:36.304Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;TrollStore（巨魔商店）是iOS设备上一款强大的应用安装工具，它允许用户永久安装任何IPA应用，无需担心7天签名过期或证书被撤销的问题。本文将详细介绍如何在iOS 17设备上安装和使用TrollStore。&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="iOS" scheme="http://example.com/categories/iOS/"/>
+    
+    
+    <category term="iOS 17" scheme="http://example.com/tags/iOS-17/"/>
+    
+    <category term="TrollStore" scheme="http://example.com/tags/TrollStore/"/>
+    
+    <category term="教程" scheme="http://example.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>7 Subtle Signs of Burnout I Ignored While Building an AI Startup</title>
+    <link href="http://example.com/2025/05/10/burnout-signs/"/>
+    <id>http://example.com/2025/05/10/burnout-signs/</id>
+    <published>2025-05-10T01:42:37.000Z</published>
+    <updated>2025-05-23T04:37:45.171Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Six months ago, I completely burned out while trying to ship TaskWeaver’s first beta release. Looking back, the warning signs were</summary>
+        
+      
+    
+    
+    
+    <category term="TaskWeaver" scheme="http://example.com/categories/TaskWeaver/"/>
+    
+    
+    <category term="Engineering Culture" scheme="http://example.com/tags/Engineering-Culture/"/>
+    
+    <category term="Work-Life Balance" scheme="http://example.com/tags/Work-Life-Balance/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The Hidden Complexity of Task Chains in AI Agents</title>
+    <link href="http://example.com/2025/05/08/task-chain-complexity/"/>
+    <id>http://example.com/2025/05/08/task-chain-complexity/</id>
+    <published>2025-05-08T06:23:15.000Z</published>
+    <updated>2025-05-23T19:31:04.022Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;When we first designed TaskWeaver, I had this delightfully naive belief: “Task chains are just sequences of steps. How hard could it</summary>
+        
+      
+    
+    
+    
+    <category term="TaskWeaver" scheme="http://example.com/categories/TaskWeaver/"/>
+    
+    
+    <category term="AI Agents" scheme="http://example.com/tags/AI-Agents/"/>
+    
+    <category term="Task Planning" scheme="http://example.com/tags/Task-Planning/"/>
+    
+    <category term="System Design" scheme="http://example.com/tags/System-Design/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>A Few Little Stories from TaskWeaver Development</title>
+    <link href="http://example.com/2025/04/25/Development/"/>
+    <id>http://example.com/2025/04/25/Development/</id>
+    <published>2025-04-25T12:03:09.000Z</published>
+    <updated>2025-05-23T19:30:48.820Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Over the past few months developing TaskWeaver, we’ve stumbled through countless pitfalls and collected some truly amusing (and</summary>
+        
+      
+    
+    
+    
+    <category term="TaskWeaver" scheme="http://example.com/categories/TaskWeaver/"/>
+    
+    
+    <category term="Engineering Culture" scheme="http://example.com/tags/Engineering-Culture/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>May in Vancouver is in no rush</title>
+    <link href="http://example.com/2025/04/12/vancouver/"/>
+    <id>http://example.com/2025/04/12/vancouver/</id>
+    <published>2025-04-12T12:03:09.000Z</published>
+    <updated>2025-05-23T19:31:12.273Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;The days start earlier and earlier now. The slight dampness on the streets slowly gives way to sunlight—not heat, but a clean, gentle</summary>
+        
+      
+    
+    
+    
+    <category term="关于生活" scheme="http://example.com/categories/%E5%85%B3%E4%BA%8E%E7%94%9F%E6%B4%BB/"/>
+    
+    
+    <category term="Live from Vancouver" scheme="http://example.com/tags/Live-from-Vancouver/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>I am Done Tweaking Hexo Themes</title>
+    <link href="http://example.com/2025/03/30/%E4%B8%8D%E6%90%9E%E4%B8%BB%E9%A2%98%E4%BA%86/"/>
+    <id>http://example.com/2025/03/30/%E4%B8%8D%E6%90%9E%E4%B8%BB%E9%A2%98%E4%BA%86/</id>
+    <published>2025-03-29T16:00:00.000Z</published>
+    <updated>2025-05-28T06:58:23.215Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;There was a time when playing with &lt;strong&gt;Hexo themes&lt;/strong&gt; felt exciting.&lt;br&gt;Clean, fast, customizable — it seemed like the perfect</summary>
+        
+      
+    
+    
+    
+    <category term="随便说说" scheme="http://example.com/categories/%E9%9A%8F%E4%BE%BF%E8%AF%B4%E8%AF%B4/"/>
+    
+    
+    <category term="Hexo" scheme="http://example.com/tags/Hexo/"/>
+    
+    <category term="主题" scheme="http://example.com/tags/%E4%B8%BB%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>5 Prompt Engineering Patterns We Use at TaskWeaver</title>
+    <link href="http://example.com/2025/03/28/prompt-patterns/"/>
+    <id>http://example.com/2025/03/28/prompt-patterns/</id>
+    <published>2025-03-28T08:15:28.000Z</published>
+    <updated>2025-05-23T19:30:53.648Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;When we started building TaskWeaver, prompt engineering felt like alchemy—mysterious incantations that sometimes worked, often didn’t,</summary>
+        
+      
+    
+    
+    
+    <category term="TaskWeaver" scheme="http://example.com/categories/TaskWeaver/"/>
+    
+    
+    <category term="Prompt Engineering" scheme="http://example.com/tags/Prompt-Engineering/"/>
+    
+    <category term="LLM Integration" scheme="http://example.com/tags/LLM-Integration/"/>
+    
+    <category term="Design Patterns" scheme="http://example.com/tags/Design-Patterns/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>A Week Exploring HuggingFace&#39;s Hidden Gems</title>
+    <link href="http://example.com/2025/03/15/tokyo-cafe/"/>
+    <id>http://example.com/2025/03/15/tokyo-cafe/</id>
+    <published>2025-03-15T06:18:46.000Z</published>
+    <updated>2025-05-23T19:31:06.711Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;The HuggingFace ecosystem feels like a digital landscape perpetually caught between states—one moment structured and documented, the</summary>
+        
+      
+    
+    
+    
+    <category term="TaskWeaver" scheme="http://example.com/categories/TaskWeaver/"/>
+    
+    
+    <category term="Machine Learning" scheme="http://example.com/tags/Machine-Learning/"/>
+    
+    <category term="NLP" scheme="http://example.com/tags/NLP/"/>
+    
+    <category term="Transformers" scheme="http://example.com/tags/Transformers/"/>
+    
+  </entry>
+  
+</feed>

@@ -83,7 +83,7 @@
 <link rel="icon" href="/favicon.ico"> 
 <!-- Theme meta tag -->
 <meta name="color-scheme" content="light dark">
-<title>Rick&#39;s Blog | Exploring the Realities of AI Development - A Week Exploring HuggingFace&#39;s Hidden Gems</title>
+<title>Rick&#39;s Blog | Exploring the Realities of AI Development - 订阅博客</title>
 <!-- Theme Style -->
 
 <link rel="stylesheet" href="/css/style.css">
@@ -951,307 +951,200 @@
 
     <!-- 主内容区域 -->
     <div class="flex-grow container mx-auto px-4 md:px-8">
-        <!-- 文章头部 -->
-<div class="max-w-5xl mx-auto mb-10" style="margin-top: 20px;">
-    <!-- 文章标题 -->
-    <h1 class="text-3xl md:text-4xl font-bold mb-3" style="color: var(--text-primary);">A Week Exploring HuggingFace&#39;s Hidden Gems</h1>
-    
-    <!-- 文章元数据 -->
-    <div class="flex flex-wrap items-center text-sm mb-8 pb-4 border-b" style="color: var(--text-secondary); border-color: var(--card-border);">
-        <div class="mr-6 mb-2">
-            <i class="far fa-calendar-alt mr-1"></i>
-            <span>Mar 2025</span>
-        </div>
-        
-        
-        <div class="mr-6 mb-2">
-            <i class="far fa-calendar-check mr-1"></i>
-            <span>Updated May 2025</span>
-        </div>
-        
-        
-        
-        <div class="mb-2">
-            <i class="far fa-folder-open mr-1"></i>
-            
-                <a href="/categories/TaskWeaver/" class="hover:text-highlight" style="color: var(--text-secondary);">
-                    TaskWeaver
-                </a>
-            
-        </div>
-        
+        <!-- 简洁的订阅页面 -->
+<div class="max-w-4xl mx-auto py-10 px-4">
+    <!-- 页面标题和说明 -->
+    <div class="mb-10 text-center">
+        <h1 class="text-3xl font-medium mb-3" style="color: var(--text-primary);">Subscribe to Blog Updates</h1>
+        <p class="text-sm max-w-lg mx-auto" style="color: var(--text-secondary);">Get the latest blog posts and technical resources delivered straight to your inbox. We send high-quality content regularly and never spam.</p>
     </div>
-</div>
-
-<!-- 文章内容 -->
-<div class="max-w-4xl mx-auto relative post-page">
-    <!-- Main Content -->
-    <div class="w-full">
-        <article>
-            <!-- Content -->
-            
-            
-            <div class="prose max-w-none mx-auto">
+    
+    <!-- 主要内容区 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 订阅表单 -->
+        <div class="col-span-2">
+            <div class="bg-card p-6 rounded-lg border" style="border-color: var(--border-color); background-color: var(--bg-card);">
+                <h2 class="text-xl font-medium mb-4" style="color: var(--text-primary);">Email Subscription</h2>
                 
-                    <div id="article-preview">
-                        <p>The HuggingFace ecosystem feels like a digital landscape perpetually caught between states—one moment structured and documented, the next surprisingly experimental and exploratory.</p>
-<p>I found myself in a corner of their GitHub repositories, away from the main Transformers library, where development seems to move at a different pace. The code patterns fell in elegant arrangements across my screen, creating logical architectures that shifted as I scrolled through them.</p><span id="article-truncation-point"></span>
-<p><em>Datasets</em> doesn’t announce itself loudly in the HuggingFace universe. A simple API, refined through years of iteration, marks its importance. Inside, the functionality is minimal to the point of elegance—clean interfaces, clear abstractions, and a data loading system that dominates the workflow. The maintainers, some who have been with the project since its early days, work with careful precision. They don’t compromise on backward compatibility, but there’s a gentle focus to their design decisions that feels more authentic than flashy features.</p>
-<p>The first dataset I load is so small it barely contains a thousand examples. But those examples are revelatory—clean, almost perfectly balanced, with edge cases that emerge slowly as you explore deeper. I’ve heard people call HuggingFace’s approach opinionated. Constraining. But watching their ecosystem evolve, I see only a team that has distilled machine learning workflows to their essence, removing everything unnecessary.</p>
-<p>I stay until I understand the core patterns, then wander further into their ecosystem.</p>
-<p><em>Accelerate</em> is different—more technical, filled with low-level optimizations visible through transparent abstractions. Two ML engineers discuss distributed training strategies in an issue thread. A researcher submits a PR with intense focus. The documentation here is gentler, more accommodating. A maintainer explains in careful detail that the library handles device placement behind the scenes. “You can run the same code on any hardware,” they write. Today I’m not deploying to multiple GPUs, but the codebase still carries the promise of that capability—efficient and powerful like well-designed machinery.</p>
-<p>I take my trained model to a small benchmark and watch the metrics. A baseline model gradually improves as I apply techniques from the documentation. A training run completes while I check something on my phone. Two evaluation metrics appear on my terminal, their improvements sudden and bright against the scrolling logs.</p>
-<p>The model predictions cool in my evaluation pipeline. They look different now—less brittle, somehow more nuanced. Like the model’s understanding has spread out to occupy a wider conceptual space.</p>
-<p>By midweek, I’ve explored four HuggingFace libraries, each with its own microclimate of design philosophy and capability. At <em>Optimum</em>, the library carefully optimized my model for inference, then apologized because the compression introduced a 0.2% accuracy drop. The imperfection made the solution more practical somehow—a reminder that behind the famous pursuit of state-of-the-art results is the equally important concept of <em>engineering trade-offs</em>: the balance of performance and practicality.</p>
-<p>I ended at <em>PEFT</em> (Parameter-Efficient Fine-Tuning), tucked into a repository so focused that its entire purpose is making large models trainable in constrained environments. The documentation recommended LoRA for my use case, configured with hyperparameters that seemed almost artisanal in their specificity. “Take time with the rank parameter,” a comment suggested. “Changes how the model adapts.”</p>
-<p>They were right. What began as noisy gradient updates mellowed into something like a perfectly calibrated learning trajectory.</p>
-<p>I’ve been working with HuggingFace tools for two weeks now, and I’m starting to understand something about this ecosystem. Its value isn’t just in the cutting-edge models or the well-maintained repositories. It’s in these small moments of developer experience—an API that treats model training like a craft, a codebase where every abstraction has been considered, the way documentation illuminates complex concepts with clarity.</p>
-<p>The ML ecosystem here isn’t just about algorithms. It’s about carving out accessible paths in a field that never really stops advancing. Each library is its own small world with its own philosophy and strengths.</p>
-<p>Back in the main Transformers repository, the project’s scale reclaims my attention. Issues stream past, PRs are reviewed, new models flash into existence. But for a few days, I found those quiet spaces between HuggingFace’s major releases.</p>
-<p>Tonight I’ll explore their newer projects, experiment with a multimodal pipeline, maybe try one of their agent frameworks. But right now, I’m carrying those technical insights with me—the elegance of that first dataset loading function, sharp and clarifying, the way the abstractions fell into place in Accelerate, the maintainers’ comments that guided implementation details like careful signposts.</p>
-<p>In an ecosystem of thousands of models and libraries, these small discoveries feel like mine alone. </p>
-
+                <form id="subscription-form" class="space-y-5">
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-1" style="color: var(--text-primary);">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-2 rounded-md border transition-colors"
+                               style="border-color: var(--border-color); background-color: var(--bg-input); color: var(--text-primary);"
+                               placeholder="your@email.com">
                     </div>
-                    <div id="load-more-container" class="text-center mt-8 mb-6">
-                        <button id="load-more-button" class="px-6 py-2 rounded-lg transition-all duration-300 ease-in-out font-medium" style="background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color);">
-                            
-                            <span id="load-more-text">Load more</span>
-                            <i class="fas fa-chevron-down ml-2"></i>
-                        </button>
+                    
+                    <div>
+                        <label for="name" class="block text-sm font-medium mb-1" style="color: var(--text-primary);">Name (Optional)</label>
+                        <input type="text" id="name" name="name"
+                               class="w-full px-4 py-2 rounded-md border transition-colors"
+                               style="border-color: var(--border-color); background-color: var(--bg-input); color: var(--text-primary);"
+                               placeholder="Your name">
                     </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2" style="color: var(--text-primary);">Topics of Interest (Optional)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="interests" value="ai" class="mr-2">
+                                <span class="text-sm" style="color: var(--text-primary);">Artificial Intelligence</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="interests" value="programming" class="mr-2">
+                                <span class="text-sm" style="color: var(--text-primary);">Programming</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="interests" value="tech" class="mr-2">
+                                <span class="text-sm" style="color: var(--text-primary);">Tech News</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="interests" value="tutorials" class="mr-2">
+                                <span class="text-sm" style="color: var(--text-primary);">Tutorials</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mt-4">
+                        <input type="checkbox" id="terms" name="terms" required class="mt-1 mr-2">
+                        <label for="terms" class="text-xs" style="color: var(--text-secondary);">
+                            I agree to receive blog updates via email and understand I can unsubscribe at any time. Your information will be handled according to our <a href="/privacy" class="underline hover:no-underline" style="color: var(--highlight-color);">Privacy Policy</a>.
+                        </label>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full px-4 py-2.5 rounded-md font-medium text-white transition-colors hover:opacity-90"
+                            style="background-color: var(--highlight-color);">
+                        <i class="fas fa-paper-plane mr-2"></i>Subscribe Now
+                    </button>
+                </form>
                 
+                <div id="subscription-success" class="hidden mt-4 p-4 rounded-md text-green-800 bg-green-100 dark:text-green-200 dark:bg-green-900/30">
+                    <p class="flex items-center justify-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Subscription successful! Thank you for your support. Please check your inbox for a confirmation email.</span>
+                    </p>
+                </div>
+                
+                <div id="subscription-error" class="hidden mt-4 p-4 rounded-md text-red-800 bg-red-100 dark:text-red-200 dark:bg-red-900/30">
+                    <p class="flex items-center justify-center">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <span>Subscription failed. Please check your email format or try again later.</span>
+                    </p>
+                </div>
             </div>
-        </article>
+        </div>
+        
+        <!-- 右侧信息 -->
+        <div class="col-span-1">
+            <!-- 订阅福利 -->
+            <div class="bg-card p-6 rounded-lg border mb-6" style="border-color: var(--border-color); background-color: var(--bg-card);">
+                <h2 class="text-lg font-medium mb-4" style="color: var(--text-primary);">Subscriber Benefits</h2>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-sm" style="color: var(--text-secondary);">Get new articles first</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-sm" style="color: var(--text-secondary);">Exclusive technical resources</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-sm" style="color: var(--text-secondary);">Regular curated content</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                        <span class="text-sm" style="color: var(--text-secondary);">Never miss important updates</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 其他订阅方式 -->
+            <div class="bg-card p-6 rounded-lg border" style="border-color: var(--border-color); background-color: var(--bg-card);">
+                <h2 class="text-lg font-medium mb-4" style="color: var(--text-primary);">Other Subscription Methods</h2>
+                
+                <div class="mb-3">
+                    <a href="/atom.xml" class="flex items-center py-2 px-4 rounded-md mb-2 border transition-colors hover:bg-opacity-50" 
+                       style="border-color: var(--border-color); color: var(--text-primary);">
+                        <i class="fas fa-rss mr-3" style="color: var(--highlight-color);"></i>
+                        <span class="text-sm">RSS Feed</span>
+                    </a>
+                </div>
+                
+                <p class="text-xs" style="color: var(--text-secondary);">
+                    You can also follow us on social media for the latest updates.
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
-/* 添加一点过渡效果 */
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    scroll-margin-top: calc(var(--nav-height) + 1rem);
-    transition: color 0.3s ease;
+/* 表单元素焦点状态 */
+#subscription-form input[type="email"]:focus,
+#subscription-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--highlight-color);
 }
 
-/* 优化文章内容宽度 */
-.prose {
-    font-size: 1.05rem;
-    line-height: 1.75;
-}
-
-/* 针对不同屏幕尺寸优化阅读体验 */
+/* 响应式调整 */
 @media (max-width: 768px) {
-    .prose {
-        font-size: 1rem;
-        line-height: 1.7;
+    .grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: 1fr;
     }
-}
-
-/* 优化图片显示 */
-.prose img {
-    margin: 1.5rem auto;
-    border-radius: 0.375rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Load More Button Styles */
-#load-more-button {
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    background-color: transparent !important;
-}
-
-#load-more-button:hover {
-    transform: translateY(-2px);
-    border-color: var(--highlight-color) !important;
-    color: var(--highlight-color) !important;
-}
-
-#load-more-button:active {
-    transform: translateY(0);
-}
-
-#load-more-button::before {
-    display: none; /* 移除之前的背景效果 */
-}
-
-#load-more-button:hover i {
-    color: var(--highlight-color);
-}
-
-#article-preview {
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#article-preview.truncated {
-    position: relative;
-    overflow: hidden;
-}
-
-#article-preview.truncated::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background: linear-gradient(to bottom, 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0), 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.8) 70%, 
-                              rgba(var(--card-bg-rgb, 255, 255, 255), 0.95) 90%);
-    pointer-events: none;
-}
-
-/* 添加深色模式下的渐变效果 */
-[data-theme="dark"] #article-preview.truncated::after {
-    background: linear-gradient(to bottom, 
-                              rgba(15, 23, 42, 0), 
-                              rgba(15, 23, 42, 0.8) 70%, 
-                              rgba(15, 23, 42, 0.95) 90%);
-}
-
-#load-more-container {
-    position: relative;
-    z-index: 5;
-    margin-top: -50px;
-    padding-top: 70px;
+    
+    .col-span-2 {
+        grid-column: span 1;
+    }
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Get background color and convert to RGB for gradient
-    const computeRGBFromCardBgColor = () => {
-        // 检查当前主题
-        const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
-        
-        // 根据主题使用不同的背景色
-        const cardBgColor = isDarkTheme ? 
-            '#0f172a' : // 深色模式背景色
-            (getComputedStyle(document.documentElement).getPropertyValue('--bg-color') || '#ffffff'); // 浅色模式背景色
-        
-        // Function to convert hex/rgb color to rgb values
-        const getRGBValues = (color) => {
-            // Create a temporary element
-            const temp = document.createElement('div');
-            temp.style.color = color;
-            temp.style.display = 'none';
-            document.body.appendChild(temp);
-            
-            // Get computed color
-            const computedColor = getComputedStyle(temp).color;
-            document.body.removeChild(temp);
-            
-            // Extract RGB values
-            const match = computedColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-            if (match) {
-                return `${match[1]}, ${match[2]}, ${match[3]}`;
-            }
-            
-            return isDarkTheme ? '15, 23, 42' : '255, 255, 255'; // 根据主题提供默认值
-        };
-        
-        // Set the RGB values as a CSS variable
-        const rgbValues = getRGBValues(cardBgColor);
-        document.documentElement.style.setProperty('--card-bg-rgb', rgbValues);
-    };
+    const form = document.getElementById('subscription-form');
+    const successMessage = document.getElementById('subscription-success');
+    const errorMessage = document.getElementById('subscription-error');
     
-    // Compute RGB values
-    computeRGBFromCardBgColor();
-    
-    // 监听主题变化事件
-    document.addEventListener('themeChanged', function(event) {
-        // 重新计算背景颜色
-        computeRGBFromCardBgColor();
-    });
-    
-    const articlePreview = document.getElementById('article-preview');
-    const loadMoreButton = document.getElementById('load-more-button');
-    const loadMoreContainer = document.getElementById('load-more-container');
-    const loadMoreText = document.getElementById('load-more-text');
-    
-    if (articlePreview && loadMoreButton) {
-        const truncationPoint = document.getElementById('article-truncation-point');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        if (truncationPoint) {
-            // Get the position of the truncation point, with safety margin
-            const truncationPos = truncationPoint.offsetTop + 50;
-            
-            // Store original article height for animation
-            const fullHeight = articlePreview.scrollHeight;
-            
-            // Initially set the article as truncated with transition
-            articlePreview.style.transition = 'max-height 0.5s ease-in-out';
-            articlePreview.classList.add('truncated');
-            
-            // Set timeout to ensure transition works properly
-            setTimeout(() => {
-                articlePreview.style.maxHeight = truncationPos + 'px';
-            }, 10);
-            
-            // Check if content is primarily Chinese
-            const isChineseContent = (function() {
-                const content = articlePreview.textContent || '';
-                const sampleText = content.substring(0, 2000);
-                const chineseCount = (sampleText.match(/[\u4e00-\u9fa5]/g) || []).length;
-                return chineseCount > 150;
-            })();
-            
-            // Set button text based on language
-            const moreText = isChineseContent ? '阅读更多' : 'Load more';
-            const lessText = isChineseContent ? '收起内容' : 'Show less';
-            
-            // Handle load more button click
-            loadMoreButton.addEventListener('click', function() {
-                if (articlePreview.classList.contains('truncated')) {
-                    // Expand article
-                    articlePreview.classList.remove('truncated');
-                    articlePreview.style.maxHeight = fullHeight + 'px';
-                    
-                    // After animation completes, set to 'none' to handle any dynamic content changes
-                    setTimeout(() => {
-                        articlePreview.style.maxHeight = 'none';
-                    }, 500);
-                    
-                    // Update button
-                    loadMoreText.textContent = lessText;
-                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-down', 'fa-chevron-up');
-                } else {
-                    // Collapse article - first set a fixed height for animation
-                    articlePreview.style.maxHeight = articlePreview.scrollHeight + 'px';
-                    
-                    // Force reflow to ensure the browser registers the maxHeight change
-                    void articlePreview.offsetWidth;
-                    
-                    // Then add the truncated class and reduce height
-                    articlePreview.classList.add('truncated');
-                    articlePreview.style.maxHeight = truncationPos + 'px';
-                    
-                    // Update button
-                    loadMoreText.textContent = moreText;
-                    loadMoreButton.querySelector('i').classList.replace('fa-chevron-up', 'fa-chevron-down');
-                    
-                    // Scroll back to the top of the article
-                    window.scrollTo({
-                        top: articlePreview.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-            
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                if (articlePreview.classList.contains('truncated')) {
-                    // Update max height based on current truncation point position
-                    articlePreview.style.maxHeight = truncationPoint.offsetTop + 50 + 'px';
-                }
-            });
-        } else {
-            // No truncation point found - hide the button
-            loadMoreContainer.style.display = 'none';
+        // 隐藏之前的消息
+        successMessage.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        
+        // 模拟提交
+        const email = document.getElementById('email').value;
+        
+        // 简单验证
+        if (!email || !email.includes('@')) {
+            errorMessage.classList.remove('hidden');
+            document.getElementById('email').focus();
+            return;
         }
-    }
+        
+        // 禁用提交按钮，显示加载状态
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+        
+        // 模拟API请求
+        setTimeout(() => {
+            // 恢复按钮状态
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            
+            // 显示成功消息
+            form.reset();
+            successMessage.classList.remove('hidden');
+            
+            // 5秒后隐藏成功消息
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 5000);
+        }, 1500);
+    });
 });
 </script> 
     </div>

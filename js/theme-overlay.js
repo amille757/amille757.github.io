@@ -3,6 +3,9 @@
  * 在主题切换时显示平滑过渡遮罩，避免闪烁
  */
 
+// 全局变量记录是否正在进行主题切换
+let isThemeSwitching = false;
+
 // 在文档加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
     // 确保页面上有遮罩层元素
@@ -33,16 +36,29 @@ function initThemeOverlay() {
         document.body.appendChild(overlay);
     }
     
-    // 确保样式正确
+    // 确保初始状态正确
+    clearOverlay(overlay);
+}
+
+// 清除遮罩层效果的函数
+function clearOverlay(overlay) {
+    if (!overlay) overlay = document.getElementById('page-transition-overlay');
+    if (!overlay) return;
+    
     overlay.style.opacity = '0';
     overlay.style.visibility = 'visible';
     overlay.style.pointerEvents = 'none';
+    overlay.style.backdropFilter = 'none';
+    overlay.style.WebkitBackdropFilter = 'none';
 }
 
 // 处理主题变更
 function handleThemeChange(event) {
     const overlay = document.getElementById('page-transition-overlay');
     if (!overlay) return;
+    
+    // 设置标志，表示正在切换主题
+    isThemeSwitching = true;
     
     // 获取新的主题
     const newTheme = event.detail.theme || document.documentElement.getAttribute('data-theme') || 'light';
@@ -63,10 +79,19 @@ function handleThemeChange(event) {
     // 主题变化完成后延迟隐藏遮罩层
     setTimeout(() => {
         // 直接移除模糊效果
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-    }, 1500); // 延长到1.5秒
+        clearOverlay(overlay);
+        
+        // 重置标志
+        isThemeSwitching = false;
+        
+        console.log('主题切换完成，模糊效果已清除');
+    }, 1500); // 1.5秒后清除
     
     // 记录主题变化
     console.log('主题已切换为:', newTheme);
+}
+
+// 导出全局变量，允许其他脚本检查是否正在进行主题切换
+window.isThemeSwitchingActive = function() {
+    return isThemeSwitching;
 } 
