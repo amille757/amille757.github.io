@@ -103,6 +103,19 @@
     <!-- Font Awesome via CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* 深色模式下背景色为纯黑色 */
+        [data-theme="dark"] body,
+        [data-theme="dark"] html,
+        [data-theme="dark"] .about-container,
+        [data-theme="dark"] .neural-interface-section,
+        [data-theme="dark"] .container > .mx-auto,
+        [data-theme="dark"] main,
+        [data-theme="dark"] footer,
+        [data-theme="dark"] .page-transition,
+        [data-theme="dark"] #page-transition-overlay {
+            background-color: #000000 !important;
+        }
+        
         /* 动态计算border-color的RGB值，用于透明效果 */
         :root {
             --border-color-rgb: 224, 224, 224; /* 默认浅色模式的#e0e0e0对应的RGB */
@@ -941,7 +954,7 @@
     </style>
 <link rel="alternate" href="/atom.xml" title="Rick's Blog" type="application/atom+xml">
 </head>
-<body class="min-h-screen flex flex-col overflow-x-hidden">
+<body class="min-h-screen flex flex-col overflow-x-hidden" style="background-color: var(--bg-color);">
     <!-- Page transition overlay -->
     <div id="page-transition-overlay" style="opacity: 0; background-color: rgba(255, 255, 255, 0.3);">
     </div>
@@ -1588,13 +1601,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-blue">
-                            <i class="fas fa-network-wired"></i>
+                            <i class="fas fa-file-alt"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-network-wired' style="font-size: 16px;"></i>
+                                    <i class='fas fa-file-alt' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Jun 04, 2025</span>
                             </div>
@@ -1629,13 +1642,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-red">
-                            <i class="fas fa-brain"></i>
+                            <i class="fas fa-newspaper"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-brain' style="font-size: 16px;"></i>
+                                    <i class='fas fa-newspaper' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">Jun 01, 2025</span>
                             </div>
@@ -1670,13 +1683,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-azure">
-                            <i class="fas fa-book"></i>
+                            <i class="fas fa-brain"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-book' style="font-size: 16px;"></i>
+                                    <i class='fas fa-brain' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 27, 2025</span>
                             </div>
@@ -1709,13 +1722,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-green">
-                            <i class="fas fa-brain"></i>
+                            <i class="fas fa-rocket"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-brain' style="font-size: 16px;"></i>
+                                    <i class='fas fa-rocket' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 22, 2025</span>
                             </div>
@@ -1750,13 +1763,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-indigo">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fas fa-newspaper"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-rocket' style="font-size: 16px;"></i>
+                                    <i class='fas fa-newspaper' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 21, 2025</span>
                             </div>
@@ -1791,13 +1804,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-pink">
-                            <i class="fas fa-code"></i>
+                            <i class="fas fa-file-alt"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-code' style="font-size: 16px;"></i>
+                                    <i class='fas fa-file-alt' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 19, 2025</span>
                             </div>
@@ -1832,13 +1845,13 @@ html:not([data-theme="dark"]) .article-count {
                         <div class="card-pattern"></div>
                         
                         <div class="card-badge badge-amber">
-                            <i class="fas fa-chart-line"></i>
+                            <i class="fas fa-database"></i>
                         </div>
                         
                         <div class="card-header">
                             <div class="card-header-content">
                                 <div class="icon-wrapper" style="display: none;">
-                                    <i class='fas fa-chart-line' style="font-size: 16px;"></i>
+                                    <i class='fas fa-database' style="font-size: 16px;"></i>
                                 </div>
                                 <span class="status-badge" style="margin-left: auto;">May 15, 2025</span>
                             </div>
@@ -1950,7 +1963,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     <!-- 页脚 - 添加底部padding以避免内容被导航栏遮挡 -->
-    <footer class="py-6 pb-20 mt-2">
+    <footer class="py-6 pb-20 mt-2" style="background-color: var(--bg-color);">
         <div class="container mx-auto px-4 flex flex-col items-center">
             <!-- 神经接口终端风格的菜单 -->
             <div class="mb-6 w-full max-w-3xl" style="background-color: transparent; border: none;">

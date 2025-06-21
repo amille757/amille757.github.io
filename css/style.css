@@ -40,14 +40,14 @@
 :root[data-theme="dark"] {
     /* 深色模式变量 */
     color-scheme: dark;
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
+    --bg-color: #000000;
+    --card-bg: #000000;
     --text-color: #f0f0f0;
     --text-secondary: #b0b0b0;
     --border-color: #2a2a2a;
     --highlight-color: #64748B;
     --highlight-hover: #7b8ba7;
-    --nav-bg: rgba(18, 18, 18, 0.9);
+    --nav-bg: rgba(0, 0, 0, 0.9);
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     --code-bg: #2a2a2a;
     --bg-primary: #000000;
@@ -92,7 +92,7 @@ body, html {
 }
 
 footer {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color) !important;
     transition: background-color 0.3s ease;
 }
 
@@ -634,6 +634,7 @@ figure.highlight .code pre {
     /* 页脚在手机上的显示 */
     footer {
         padding: 1.5rem 1rem !important;
+        background-color: var(--bg-color) !important;
     }
     
     /* 修复长内容自动换行 */
@@ -897,7 +898,7 @@ article,
 }
 
 [data-theme="dark"] #page-transition-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #000000;
 }
 
 /* 移除旧的spinner样式，因为不再需要 */
@@ -1278,7 +1279,7 @@ figure.highlight:hover,
 
 /* 确保深色模式下文章页面保持原来的背景色 */
 :root[data-theme="dark"] .post-page {
-    background-color: var(--bg-color) !important;
+    background-color: #000000 !important;
 }
 
 /* 文章页面背景颜色 - 在浅色模式下使用卡片背景色 */
@@ -1288,7 +1289,7 @@ body:has(article .prose) {
 
 /* 确保深色模式下文章页面保持原来的背景色 */
 :root[data-theme="dark"] body:has(article .prose) {
-    background-color: var(--bg-color);
+    background-color: #000000;
 }
 
 /* 只隐藏移动端的作者卡片 */
